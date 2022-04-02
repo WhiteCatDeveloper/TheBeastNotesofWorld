@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">The Beast Notes of World</string>
+    <string name="Menu">Меню</string>
+    <string name="Search">Поиск</string>
+    <string name="Sort_by">Сортировать по:</string>
+    <string name="to_back">Назад</string>
+    <string name="save">Сохранить</string>
+    <string name="day_to_end">Дней на выполнение:</string>
+    <string name="importance">Важность:</string>
+    <string name="note">заметка</string>
+    <string name="title">Заголовок</string>
+    <string name="add_to_new_note">Добавить новую заметку</string>
+    <string name="edit_note">Редактировать запись</string>
+    <string name="create_new_note">Создать новую запись</string>
+    <string name="date_of_create">Дата создания:</string>
+    <string name="sort_by_importance">Сортировка по важности</string>
+    <string name="sort_by_day_to_deadline">Сортировка по срочности</string>
+    <string name="sort_by_date_of_create">Сортировка по дате создания</string>
+    <array name="showSort">
+        <item>Важности</item>
+        <item>Срочности</item>
+        <item>Дате создания</item>
+    </array>
+    <string-array name="importance">
+        <item>Не важно</item>
+        <item>Небольшая</item>
+        <item>Средняя </item>
+        <item>Высокая</item>
+    </string-array>
+</resources>
