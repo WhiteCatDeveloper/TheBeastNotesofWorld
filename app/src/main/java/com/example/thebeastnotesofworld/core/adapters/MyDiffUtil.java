@@ -29,19 +29,18 @@ public class MyDiffUtil extends DiffUtil.Callback {
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
         Note oldNote = oldList.get(oldItemPosition);
-        Note newNote = oldList.get(newItemPosition);
+        Note newNote = newList.get(newItemPosition);
         return oldNote.getId() == newNote.getId();
     }
 
 
-    // Адаптер ничего не знает о поле text, его можно не сравнивать
+    // Адаптер ничего не знает о полях text и dateOfCreate, их можно не сравнивать
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         Note oldNote = oldList.get(oldItemPosition);
-        Note newNote = oldList.get(newItemPosition);
+        Note newNote = newList.get(newItemPosition);
         return oldNote.getTitle().equals(newNote.getTitle()) &&
                 oldNote.getImportance() == newNote.getImportance() &&
-                oldNote.getDayToDeadLine() == newNote.getDayToDeadLine() &&
-                oldNote.getDateOfCreate().equals(newNote.getDateOfCreate());
+                oldNote.getDayToDeadLine() == newNote.getDayToDeadLine();
     }
 }

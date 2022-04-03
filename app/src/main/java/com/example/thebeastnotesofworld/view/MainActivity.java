@@ -3,10 +3,10 @@ package com.example.thebeastnotesofworld.view;
 // ЕЩЕ ЗАДАЧИ
 // 1. Сохранение состояния сортировки. V
 // 2. Исправление обновления ресайклера (DiffUtil).
-// 3. Увеличить апи до 26.
-// 4. Иконка приложения.
-// 5. Избавиться от RequiresApi;
-// 6. Убрать везде @SuppressLint.
+// 3. Увеличить апи до 26. Избавиться от RequiresApi в MyCalendar;
+// 4. Иконка приложения.  V
+// 5. Убрать везде @SuppressLint.
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -36,15 +36,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButtonAddNote;
+    RecyclerView recyclerViewNotes;
     private RVAdapter adapter;
     SharedPreferences sharedPreferences;
     public static final String APP_PREFERENCES = "mySettings";
     private static final String SETTINGS_SORT_BY = "settingsSortBy";
     private String sortBy;
 
+
     private final List<Note> notes = new ArrayList<>();
 
 
+    // Создание меню
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    // Слушатель на меню
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -64,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
         else sortBy = null;
         saveSort(sortBy);
         setNotes();
-        adapter.notifyDataSetChanged();
-
         MyDiffUtil myDiffUtil = new MyDiffUtil(adapter.getNoteList(), notes);
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(myDiffUtil);
+        adapter.setNoteList(notes);
+        result.dispatchUpdatesTo(adapter);
         return super.onOptionsItemSelected(item);
     }
 
@@ -79,16 +83,17 @@ public class MainActivity extends AppCompatActivity {
         getSort();
         setNotes();
         floatingActionButtonAddNote = findViewById(R.id.floatingActionButtonAddNote);
-        RecyclerView recyclerViewNotes = findViewById(R.id.recyclerViewNotes);
+        recyclerViewNotes = findViewById(R.id.recyclerViewNotes);
         adapter = new RVAdapter(this, notes);
         recyclerViewNotes.setAdapter(adapter);
         listeners();
     }
 
+    // Добавляем значения в список из БД. Т.к нельзя просто присвоить списку значения другого
+    // списка, то очищаем его и добавляем новые значения через метод коллекций addAll
     private void setNotes() {
         notes.clear();
-        List<Note> notesInDB = new WorkingInDB().getNotes(this, sortBy);
-        notes.addAll(notesInDB);
+        notes.addAll(new WorkingInDB().getNotes(this, sortBy));
     }
 
 
@@ -119,12 +124,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Сохраняет состояние сортировки списка
     private void saveSort(String sortBy) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SETTINGS_SORT_BY, sortBy);
         editor.apply();
     }
 
+    // Возвращает состоряние сортировки списка
     private void getSort() {
         if (sharedPreferences.contains(SETTINGS_SORT_BY)) {
          sortBy = sharedPreferences.getString(SETTINGS_SORT_BY, null);

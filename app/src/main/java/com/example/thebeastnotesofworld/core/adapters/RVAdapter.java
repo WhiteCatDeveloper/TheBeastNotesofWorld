@@ -17,6 +17,7 @@ import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.MyCalendar;
 import com.example.thebeastnotesofworld.core.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
@@ -44,7 +45,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     public void setNoteList(List<Note> noteList) {
-        this.noteList = noteList;
+        noteList = new ArrayList<>(noteList);
+        this.noteList.clear();
+        this.noteList.addAll(noteList);
     }
 
     @NonNull
