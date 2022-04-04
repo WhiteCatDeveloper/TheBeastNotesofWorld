@@ -21,6 +21,7 @@ import java.util.Locale;
 public class MyCalendar{
 
     // К сожалению работает только с api>=26
+    // На эмуляторе с api30 вообще крашится :(
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static int calculateDayToDeadline(Note note) {
         String currentDate = new SimpleDateFormat
