@@ -1,6 +1,5 @@
 package com.example.thebeastnotesofworld.core;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,6 +10,10 @@ import com.example.thebeastnotesofworld.db.NotesDBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * В этом классе происходит вся работа с БД.
+ */
 
 public class WorkingInDB {
 
@@ -54,16 +57,6 @@ public class WorkingInDB {
         return notes.get(0);
     }
 
-    private Note getNoteFromDB(Cursor cursor) {
-        @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(NotesContract.NotesEntry._ID));
-        @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE));
-        @SuppressLint("Range") String text = cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TEXT));
-        @SuppressLint("Range") int importance = cursor.getInt(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_IMPORTANCE));
-        @SuppressLint("Range") int dayToDeadLine = cursor.getInt(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DEADLINE));
-        @SuppressLint("Range") String dateOfCreate = cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DATE_OF_CREATE));
-        return new Note(id, title, text, importance, dayToDeadLine, dateOfCreate);
-    }
-
     public void saveNewNote(Context context, String title, String text, int importance, int dayToDeadline, String dateOfCreate) {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getWritableDatabase();
@@ -74,5 +67,16 @@ public class WorkingInDB {
         contentValues.put(NotesContract.NotesEntry.COLUMN_DEADLINE, dayToDeadline);
         contentValues.put(NotesContract.NotesEntry.COLUMN_DATE_OF_CREATE, dateOfCreate);
         database.insert(NotesContract.NotesEntry.TABLE_NAME, null, contentValues);
+    }
+
+    // Служебный метод для получения одной записи из БД
+    private Note getNoteFromDB(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry._ID));
+        String title = cursor.getString(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_TITLE));
+        String text = cursor.getString(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_TEXT));
+        int importance = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_IMPORTANCE));
+        int dayToDeadLine = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_DEADLINE));
+        String dateOfCreate = cursor.getString(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_DATE_OF_CREATE));
+        return new Note(id, title, text, importance, dayToDeadLine, dateOfCreate);
     }
 }
