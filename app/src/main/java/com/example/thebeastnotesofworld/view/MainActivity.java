@@ -7,7 +7,7 @@ package com.example.thebeastnotesofworld.view;
 // 2. Исправление обновления ресайклера (DiffUtil).
 // 3. Увеличить апи до 26. Избавиться от RequiresApi в MyCalendar;
 // 4. Иконка приложения.  V
-// 5. Убрать везде @SuppressLint.
+// 5. Убрать везде @SuppressLint. V
 // 6. Разобраться с кращем в эмуляторе с апи30 (в MyCalendar)
 
 
