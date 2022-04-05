@@ -4,17 +4,18 @@ package com.example.thebeastnotesofworld.view;
 
 // ЕЩЕ ЗАДАЧИ
 // 1. Сохранение состояния сортировки. V
-// 2. Исправление обновления ресайклера (DiffUtil).
-// 3. Увеличить апи до 26. Избавиться от RequiresApi в MyCalendar;
+// 2. Исправление обновления ресайклера (DiffUtil). V
+//         2.1 Поломалась сортировка по срочности. Какого???
+// 3. Увеличить апи до 26.
+//              3.1 Избавиться от RequiresApi в MyCalendar;
 // 4. Иконка приложения.  V
 // 5. Убрать везде @SuppressLint. V
-// 6. Разобраться с кращем в эмуляторе с апи30 (в MyCalendar)
+// 6. Разобраться с крашем в эмуляторе с апи30 (в MyCalendar)
 
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -26,7 +27,6 @@ import android.view.MenuItem;
 
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
-import com.example.thebeastnotesofworld.core.adapters.MyDiffUtil;
 import com.example.thebeastnotesofworld.core.adapters.RVAdapter;
 import com.example.thebeastnotesofworld.core.Note;
 import com.example.thebeastnotesofworld.db.NotesContract;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private String sortBy;
 
 
-    private final List<Note> notes = new ArrayList<>();
+    private List<Note> notes = new ArrayList<>();
 
 
     // Создание меню
@@ -70,11 +70,7 @@ public class MainActivity extends AppCompatActivity {
             sortBy = NotesContract.NotesEntry.COLUMN_DATE_OF_CREATE + " DESC";
         else sortBy = null;
         saveSort(sortBy);
-        setNotes();
-        MyDiffUtil myDiffUtil = new MyDiffUtil(adapter.getNoteList(), notes);
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(myDiffUtil);
-        adapter.setNoteList(notes);
-        result.dispatchUpdatesTo(adapter);
+        updateListNotes();
         return super.onOptionsItemSelected(item);
     }
 
@@ -92,11 +88,19 @@ public class MainActivity extends AppCompatActivity {
         listeners();
     }
 
-    // Добавляем значения в список из БД. Т.к нельзя просто присвоить списку значения другого
-    // списка, то очищаем его и добавляем новые значения через метод коллекций addAll
+    // Залолняем список заметок при первом запуске
     private void setNotes() {
+        notes = new WorkingInDB().getNotes(this, sortBy);
+    }
+
+    // Добавляем новые значения в список из БД. Т.к нельзя просто присвоить списку значения другого
+    // списка, то очищаем его и добавляем новые значения через метод коллекций addAll
+    // Так же у адаптера вызываем перерисовку
+    private void updateListNotes() {
+        List<Note> newList = new WorkingInDB().getNotes(this, sortBy);
+        adapter.updateList(newList);
         notes.clear();
-        notes.addAll(new WorkingInDB().getNotes(this, sortBy));
+        notes.addAll(newList);
     }
 
 
@@ -143,8 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void remote (int position) {
         int id = notes.get(position).getId();
-        WorkingInDB workingInDB = new WorkingInDB();
-        workingInDB.remote(this, id);
+        new WorkingInDB().remote(this, id);
         notes.remove(position);
         adapter.notifyItemRemoved(position);
     }

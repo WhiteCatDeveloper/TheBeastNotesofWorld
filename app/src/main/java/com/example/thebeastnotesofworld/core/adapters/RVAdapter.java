@@ -11,19 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.MyCalendar;
 import com.example.thebeastnotesofworld.core.Note;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
-    private List<Note> noteList;
+    private final List<Note> noteList;
     private OnNoteClickListener onNoteClickListener;
 
     public RVAdapter(Context context, List<Note> noteList) {
@@ -40,14 +40,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         this.onNoteClickListener = onNoteClickListener;
     }
 
-    public List<Note> getNoteList() {
-        return noteList;
-    }
 
-    public void setNoteList(List<Note> noteList) {
-        noteList = new ArrayList<>(noteList);
-        this.noteList.clear();
-        this.noteList.addAll(noteList);
+    public void updateList (List<Note> newList) {
+        MyDiffUtil diffUtil = new MyDiffUtil(noteList, newList);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(diffUtil);
+        result.dispatchUpdatesTo(this);
+        noteList.clear();
+        noteList.addAll(newList);
     }
 
     @NonNull
