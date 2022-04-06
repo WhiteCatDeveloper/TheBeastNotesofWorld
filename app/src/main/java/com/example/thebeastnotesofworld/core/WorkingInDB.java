@@ -4,11 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.thebeastnotesofworld.db.NotesContract;
 import com.example.thebeastnotesofworld.db.NotesDBHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,6 +24,7 @@ public class WorkingInDB {
     private NotesDBHelper dbHelper;
     private SQLiteDatabase database;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList<Note> getNotes(Context context, String sortBy){
         ArrayList<Note> notes = new ArrayList<>();
         dbHelper = new NotesDBHelper(context);
@@ -30,6 +35,14 @@ public class WorkingInDB {
             notes.add(getNoteFromDB(cursor));
         }
         cursor.close();
+        // КОСТЫЛЬ! Сортируем по текущим оставшимся дням
+        if (sortBy.equals(NotesContract.NotesEntry.COLUMN_DEADLINE + " ASC")) {
+            for (Note note : notes) {
+                int i = MyCalendar.calculateDayToDeadline(note);
+                note.setCurrentValueDayToDeadline(i);
+            }
+            Collections.sort(notes, Note.COMPARE_BY_CURRENT_DAY_TO_DEADLINE);
+        }
         return notes;
     }
 

@@ -1,25 +1,24 @@
 package com.example.thebeastnotesofworld.view;
 
-
-
 // ЕЩЕ ЗАДАЧИ
 // 1. Сохранение состояния сортировки. V
 // 2. Исправление обновления ресайклера (DiffUtil). V
-//         2.1 Поломалась сортировка по срочности. Какого???
+//         2.1 Поломалась сортировка по срочности. Какого??? V
 // 3. Увеличить апи до 26.
 //              3.1 Избавиться от RequiresApi в MyCalendar;
 // 4. Иконка приложения.  V
 // 5. Убрать везде @SuppressLint. V
 // 6. Разобраться с крашем в эмуляторе с апи30 (в MyCalendar)
 
-
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Слушатель на меню
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Залолняем список заметок при первом запуске
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setNotes() {
         notes = new WorkingInDB().getNotes(this, sortBy);
     }
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     // Добавляем новые значения в список из БД. Т.к нельзя просто присвоить списку значения другого
     // списка, то очищаем его и добавляем новые значения через метод коллекций addAll
     // Так же у адаптера вызываем перерисовку
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateListNotes() {
         List<Note> newList = new WorkingInDB().getNotes(this, sortBy);
         adapter.updateList(newList);
