@@ -36,7 +36,7 @@ public class WorkingInDB {
         }
         cursor.close();
         // КОСТЫЛЬ! Сортируем по текущим оставшимся дням
-        if (sortBy.equals(NotesContract.NotesEntry.COLUMN_DEADLINE + " ASC")) {
+        if (sortBy!=null && sortBy.equals(NotesContract.NotesEntry.COLUMN_DEADLINE + " ASC")) {
             for (Note note : notes) {
                 int i = MyCalendar.calculateDayToDeadline(note);
                 note.setCurrentValueDayToDeadline(i);

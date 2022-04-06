@@ -8,7 +8,7 @@ package com.example.thebeastnotesofworld.view;
 //              3.1 Избавиться от RequiresApi в MyCalendar;
 // 4. Иконка приложения.  V
 // 5. Убрать везде @SuppressLint. V
-// 6. Разобраться с крашем в эмуляторе с апи30 (в MyCalendar)
+// 6. Разобраться с крашем в эмуляторе с апи30 (в MyCalendar) V
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;

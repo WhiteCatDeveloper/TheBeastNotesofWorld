@@ -20,16 +20,15 @@ import java.util.Locale;
  */
 public class MyCalendar{
 
-    // К сожалению работает только с api>=26
-    // На эмуляторе с api30 вообще крашится :(
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static int calculateDayToDeadline(Note note) {
         String currentDate = new SimpleDateFormat
                 ("dd-MM-yyyy", Locale.ENGLISH).format(new Date());
         String dateOfCreate = note.getDateOfCreate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate startDate = LocalDate.parse(dateOfCreate, formatter);
+
         LocalDate endDate = LocalDate.parse(currentDate, formatter);
+        LocalDate startDate = LocalDate.parse(dateOfCreate, formatter);
         Period period = Period.between(startDate, endDate);
         return note.getDayToDeadLine() - period.getDays();
     }
