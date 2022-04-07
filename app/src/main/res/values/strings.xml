@@ -7,7 +7,7 @@
     <string name="save">Сохранить</string>
     <string name="day_to_end">Дней на выполнение:</string>
     <string name="importance">Важность:</string>
-    <string name="note">заметка</string>
+    <string name="toDoNote">заметка</string>
     <string name="title">Заголовок</string>
     <string name="add_to_new_note">Добавить новую заметку</string>
     <string name="edit_note">Редактировать запись</string>

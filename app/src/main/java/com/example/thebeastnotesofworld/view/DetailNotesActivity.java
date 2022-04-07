@@ -1,14 +1,16 @@
 package com.example.thebeastnotesofworld.view;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.Note;
+import com.example.thebeastnotesofworld.core.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
 
 public class DetailNotesActivity extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class DetailNotesActivity extends AppCompatActivity {
     private Button buttonDetailToAddNote;
     private int id;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +37,13 @@ public class DetailNotesActivity extends AppCompatActivity {
         setTextView(new WorkingInDB().getOneNoteByID(this, id));
     }
 
-    private void setTextView(Note note) {
-        textViewDetailTitle.setText(note.getTitle());
-        textViewDetailNote.setText(note.getText());
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setTextView(ToDoNote toDoNote) {
+        textViewDetailTitle.setText(toDoNote.getTitle());
+        textViewDetailNote.setText(toDoNote.getText());
         String importance;
         String[] arrImportance = getResources().getStringArray(R.array.importance);
-        switch (note.getImportance()) {
+        switch (toDoNote.getImportance()) {
             case 0: importance = arrImportance[0];
             break;
             case 1: importance = arrImportance[1];
@@ -49,8 +53,8 @@ public class DetailNotesActivity extends AppCompatActivity {
             default: importance = arrImportance[3];
         }
         textViewDetailImportance.setText(importance);
-        textViewDetailDateOfCreate.setText(note.getDateOfCreate());
-        textViewDetailDeadline.setText(String.valueOf(note.getDayToDeadLine()));
+        textViewDetailDateOfCreate.setText(toDoNote.getDateOfCreate());
+        textViewDetailDeadline.setText(String.valueOf(toDoNote.getDayToDeadLine()));
     }
 
     private void listeners() {

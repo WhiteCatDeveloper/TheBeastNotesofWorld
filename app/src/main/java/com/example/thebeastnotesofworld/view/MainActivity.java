@@ -1,14 +1,9 @@
 package com.example.thebeastnotesofworld.view;
 
 // ЕЩЕ ЗАДАЧИ
-// 1. Сохранение состояния сортировки. V
-// 2. Исправление обновления ресайклера (DiffUtil). V
-//         2.1 Поломалась сортировка по срочности. Какого??? V
+
 // 3. Увеличить апи до 26.
-//              3.1 Избавиться от RequiresApi в MyCalendar;
-// 4. Иконка приложения.  V
-// 5. Убрать везде @SuppressLint. V
-// 6. Разобраться с крашем в эмуляторе с апи30 (в MyCalendar) V
+//              3.1 Избавиться от RequiresApi
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -25,9 +20,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.thebeastnotesofworld.R;
+import com.example.thebeastnotesofworld.core.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
-import com.example.thebeastnotesofworld.core.adapters.RVAdapter;
-import com.example.thebeastnotesofworld.core.Note;
+import com.example.thebeastnotesofworld.view.adapters.RVAdapter;
 import com.example.thebeastnotesofworld.db.NotesContract;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -46,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private String sortBy;
 
 
-    private List<Note> notes = new ArrayList<>();
+    private List<ToDoNote> toDoNotes = new ArrayList<>();
 
 
     // Создание меню
@@ -65,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.sortByImportance)
             sortBy = NotesContract.NotesEntry.COLUMN_IMPORTANCE + " DESC";
         else if (id == R.id.sortByDeadline)
-            sortBy = NotesContract.NotesEntry.COLUMN_DEADLINE + " ASC";
+            sortBy = NotesContract.NotesEntry.COLUMN_DEADLINE + " DESC";
         else if (id == R.id.sortByDateOfCreate)
             sortBy = NotesContract.NotesEntry.COLUMN_DATE_OF_CREATE + " DESC";
         else sortBy = null;
@@ -84,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         setNotes();
         floatingActionButtonAddNote = findViewById(R.id.floatingActionButtonAddNote);
         recyclerViewNotes = findViewById(R.id.recyclerViewNotes);
-        adapter = new RVAdapter(this, notes);
+        adapter = new RVAdapter(this, toDoNotes);
         recyclerViewNotes.setAdapter(adapter);
         listeners();
     }
@@ -92,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     // Залолняем список заметок при первом запуске
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setNotes() {
-        notes = new WorkingInDB().getNotes(this, sortBy);
+        toDoNotes = new WorkingInDB().getNotes(this, sortBy);
     }
 
     // Добавляем новые значения в список из БД. Т.к нельзя просто присвоить списку значения другого
@@ -100,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
     // Так же у адаптера вызываем перерисовку
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateListNotes() {
-        List<Note> newList = new WorkingInDB().getNotes(this, sortBy);
+        List<ToDoNote> newList = new WorkingInDB().getNotes(this, sortBy);
         adapter.updateList(newList);
-        notes.clear();
-        notes.addAll(newList);
+        toDoNotes.clear();
+        toDoNotes.addAll(newList);
     }
 
 
@@ -114,12 +109,16 @@ public class MainActivity extends AppCompatActivity {
          });
 
         adapter.setOnNoteClickListener(new RVAdapter.OnNoteClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onNoteClick(int position) {
                 Intent intent = new Intent(getApplicationContext(), DetailNotesActivity.class);
-                intent.putExtra("idNote", notes.get(position).getId());
+                intent.putExtra("idNote", toDoNotes.get(position).getId());
                 startActivity(intent);
             }
+
+
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onLongClick(int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -148,10 +147,11 @@ public class MainActivity extends AppCompatActivity {
         } else sortBy = null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void remote (int position) {
-        int id = notes.get(position).getId();
+        int id = toDoNotes.get(position).getId();
         new WorkingInDB().remote(this, id);
-        notes.remove(position);
+        toDoNotes.remove(position);
         adapter.notifyItemRemoved(position);
     }
 }

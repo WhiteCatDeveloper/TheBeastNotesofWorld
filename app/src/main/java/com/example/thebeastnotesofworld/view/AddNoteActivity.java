@@ -2,15 +2,17 @@ package com.example.thebeastnotesofworld.view;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.Note;
+import com.example.thebeastnotesofworld.core.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +31,7 @@ public class AddNoteActivity extends AppCompatActivity {
     private boolean editNote = false;
     private int idNote;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +46,12 @@ public class AddNoteActivity extends AppCompatActivity {
         listeners();
     }
 
-    private void setTextField(Note note) {
-        editTextTitleNote.setText(note.getTitle());
-        editTextNote.setText(note.getText());
-        spinnerImportance.setSelection(note.getImportance());
-        editTextDeadline.setText(String.valueOf(note.getDayToDeadLine()));
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setTextField(ToDoNote toDoNote) {
+        editTextTitleNote.setText(toDoNote.getTitle());
+        editTextNote.setText(toDoNote.getText());
+        spinnerImportance.setSelection(toDoNote.getImportance());
+        editTextDeadline.setText(String.valueOf(toDoNote.getDayToDeadLine()));
     }
 
     private void saveNewNote() {

@@ -25,25 +25,21 @@ public class WorkingInDB {
     private SQLiteDatabase database;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList<Note> getNotes(Context context, String sortBy){
-        ArrayList<Note> notes = new ArrayList<>();
+    public ArrayList<ToDoNote> getNotes(Context context, String sortBy){
+        ArrayList<ToDoNote> toDoNotes = new ArrayList<>();
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getReadableDatabase();
         Cursor cursor = database.query(NotesContract.NotesEntry.TABLE_NAME,
                 null, null, null, null, null, sortBy);
         while (cursor.moveToNext()) {
-            notes.add(getNoteFromDB(cursor));
+            toDoNotes.add(getNoteFromDB(cursor));
         }
         cursor.close();
         // КОСТЫЛЬ! Сортируем по текущим оставшимся дням
-        if (sortBy!=null && sortBy.equals(NotesContract.NotesEntry.COLUMN_DEADLINE + " ASC")) {
-            for (Note note : notes) {
-                int i = MyCalendar.calculateDayToDeadline(note);
-                note.setCurrentValueDayToDeadline(i);
-            }
-            Collections.sort(notes, Note.COMPARE_BY_CURRENT_DAY_TO_DEADLINE);
+        if (sortBy!=null && sortBy.equals(NotesContract.NotesEntry.COLUMN_DEADLINE + " DESC")) {
+            Collections.sort(toDoNotes, ToDoNote.COMPARE_BY_CURRENT_DAY_TO_DEADLINE);
         }
-        return notes;
+        return toDoNotes;
     }
 
     public void remote (Context context, int id) {
@@ -55,19 +51,20 @@ public class WorkingInDB {
     }
 
 
-    public Note getOneNoteByID(Context context, int id) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ToDoNote getOneNoteByID(Context context, int id) {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getReadableDatabase();
         String selection = NotesContract.NotesEntry._ID + " == ?";
         String[] selectionArgs = new String[] {String.valueOf(id)};
         Cursor cursor = database.query(NotesContract.NotesEntry.TABLE_NAME, null, selection,
                 selectionArgs, null, null, null);
-        List<Note> notes = new ArrayList<>();
+        List<ToDoNote> toDoNotes = new ArrayList<>();
         while (cursor.moveToNext()) {
-            notes.add(getNoteFromDB(cursor));
+            toDoNotes.add(getNoteFromDB(cursor));
         }
         cursor.close();
-        return notes.get(0);
+        return toDoNotes.get(0);
     }
 
     public void saveNewNote(Context context, String title, String text, int importance, int dayToDeadline, String dateOfCreate) {
@@ -83,13 +80,14 @@ public class WorkingInDB {
     }
 
     // Служебный метод для получения одной записи из БД
-    private Note getNoteFromDB(Cursor cursor) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private ToDoNote getNoteFromDB(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry._ID));
         String title = cursor.getString(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_TITLE));
         String text = cursor.getString(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_TEXT));
         int importance = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_IMPORTANCE));
         int dayToDeadLine = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_DEADLINE));
         String dateOfCreate = cursor.getString(cursor.getColumnIndexOrThrow(NotesContract.NotesEntry.COLUMN_DATE_OF_CREATE));
-        return new Note(id, title, text, importance, dayToDeadLine, dateOfCreate);
+        return new ToDoNote(id, title, text, importance, dayToDeadLine, dateOfCreate);
     }
 }

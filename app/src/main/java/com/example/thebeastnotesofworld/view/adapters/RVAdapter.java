@@ -1,4 +1,4 @@
-package com.example.thebeastnotesofworld.core.adapters;
+package com.example.thebeastnotesofworld.view.adapters;
 
 import android.content.Context;
 import android.os.Build;
@@ -15,20 +15,19 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.MyCalendar;
-import com.example.thebeastnotesofworld.core.Note;
+import com.example.thebeastnotesofworld.core.ToDoNote;
 
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
-    private final List<Note> noteList;
+    private final List<ToDoNote> toDoNoteList;
     private OnNoteClickListener onNoteClickListener;
 
-    public RVAdapter(Context context, List<Note> noteList) {
+    public RVAdapter(Context context, List<ToDoNote> toDoNoteList) {
         this.layoutInflater = LayoutInflater.from(context);
-        this.noteList = noteList;
+        this.toDoNoteList = toDoNoteList;
     }
 
     public interface OnNoteClickListener {
@@ -41,12 +40,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
 
-    public void updateList (List<Note> newList) {
-        MyDiffUtil diffUtil = new MyDiffUtil(noteList, newList);
+    public void updateList (List<ToDoNote> newList) {
+        MyDiffUtil diffUtil = new MyDiffUtil(toDoNoteList, newList);
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(diffUtil);
         result.dispatchUpdatesTo(this);
-        noteList.clear();
-        noteList.addAll(newList);
+        toDoNoteList.clear();
+        toDoNoteList.addAll(newList);
     }
 
     @NonNull
@@ -59,16 +58,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Note note = noteList.get(position);
-        holder.textViewTitle.setText(note.getTitle());
-        int dayToDeadline = MyCalendar.calculateDayToDeadline(note);
+        ToDoNote toDoNote = toDoNoteList.get(position);
+        holder.textViewTitle.setText(toDoNote.getTitle());
+        int dayToDeadline = toDoNote.calculateDayToDeadline();
         if (dayToDeadline > 0) {
             holder.textViewDeadline.setText(String.valueOf(dayToDeadline));
         } else {
             holder.textViewDeadline.setText("Время вышло!");
         }
         int colorId;
-        switch (note.getImportance()) {
+        switch (toDoNote.getImportance()) {
             case 1: colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.green);
             break;
             case 2: colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.yellow);
@@ -82,7 +81,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return noteList.size();
+        return toDoNoteList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
