@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheBeastNotesOfWorld">
         <activity
+            android:name=".view.CompletedNotesActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.AddNoteActivity"
             android:exported="false" />
         <activity

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -58,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.sortByImportance)
-            sortBy = NotesContract.NotesEntry.COLUMN_IMPORTANCE + " DESC";
+            sortBy = NotesContract.ToDoNotesEntry.COLUMN_IMPORTANCE + " DESC";
         else if (id == R.id.sortByDeadline)
-            sortBy = NotesContract.NotesEntry.COLUMN_DEADLINE + " DESC";
+            sortBy = NotesContract.ToDoNotesEntry.COLUMN_DEADLINE + " DESC";
         else if (id == R.id.sortByDateOfCreate)
-            sortBy = NotesContract.NotesEntry.COLUMN_DATE_OF_CREATE + " DESC";
+            sortBy = NotesContract.ToDoNotesEntry.COLUMN_DATE_OF_CREATE + " DESC";
         else sortBy = null;
         saveSort(sortBy);
         updateListNotes();
@@ -124,8 +125,11 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Предупреждение!")
                         .setMessage("Вы действительно хотите удалить заметку?")
-                        .setPositiveButton("ДА", (dialogInterface, i) -> remote(position))
-                        .setNegativeButton("НЕТ", ((dialogInterface, i) -> {}))
+                        .setPositiveButton("УДАЛИТЬ", (dialogInterface, i) -> remote(position))
+                        .setNegativeButton("ОТМЕНА", ((dialogInterface, i) -> {}))
+                        .setNeutralButton("ПЕРЕМЕСТИТЬ", (dialog, which) -> {
+                            Intent intentToCompleted = new Intent();
+                        })
                         .show();
             }
         });
