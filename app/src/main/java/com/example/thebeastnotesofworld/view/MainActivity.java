@@ -124,11 +124,13 @@ public class MainActivity extends AppCompatActivity {
             public void onLongClick(int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Предупреждение!")
-                        .setMessage("Вы действительно хотите удалить заметку?")
-                        .setPositiveButton("УДАЛИТЬ", (dialogInterface, i) -> remote(position))
-                        .setNegativeButton("ОТМЕНА", ((dialogInterface, i) -> {}))
+                        .setMessage("Переместить запись в выполненное или удалить?")
+                        .setPositiveButton("ОТМЕНА", ((dialogInterface, i) -> {}))
+                        .setNegativeButton("УДАЛИТЬ", (dialogInterface, i) -> remote(position))
                         .setNeutralButton("ПЕРЕМЕСТИТЬ", (dialog, which) -> {
-                            Intent intentToCompleted = new Intent();
+                            Intent intentToCompleted = new Intent(getApplicationContext(),
+                                    CompletedNotesActivity.class);
+                            startActivity(intentToCompleted);
                         })
                         .show();
             }
