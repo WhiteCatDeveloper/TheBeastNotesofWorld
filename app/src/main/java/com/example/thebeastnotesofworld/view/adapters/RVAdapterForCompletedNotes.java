@@ -1,5 +1,6 @@
 package com.example.thebeastnotesofworld.view.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +21,15 @@ public class RVAdapterForCompletedNotes extends
     private final LayoutInflater layoutInflater;
     private final List<CompletedToDoNote> list;
 
-    public RVAdapterForCompletedNotes(LayoutInflater layoutInflater, List<CompletedToDoNote> list) {
-        this.layoutInflater = layoutInflater;
+    public RVAdapterForCompletedNotes(Context context, List<CompletedToDoNote> list) {
+        this.layoutInflater = LayoutInflater.from(context);
         this.list = list;
     }
 
     @NonNull
     @Override
     public ViewHolderCompleted onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_completed_note, parent);
+        View view = layoutInflater.inflate(R.layout.item_completed_note, parent, false);
         return new ViewHolderCompleted(view);
     }
 

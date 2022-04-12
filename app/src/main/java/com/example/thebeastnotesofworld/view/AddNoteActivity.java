@@ -104,7 +104,7 @@ public class AddNoteActivity extends AppCompatActivity {
                 toMain();
             } else if (checkField() && editNote) {
                 saveNewNote();
-                new WorkingInDB().remote(this, idNote);
+                new WorkingInDB().remoteFromToDoNotes(this, idNote);
                 toMain();
             }
         });

@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -34,13 +33,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButtonAddNote;
-    RecyclerView recyclerViewNotes;
+    private RecyclerView recyclerViewNotes;
     private RVAdapter adapter;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
     public static final String APP_PREFERENCES = "mySettings";
     private static final String SETTINGS_SORT_BY = "settingsSortBy";
     private String sortBy;
-
 
     private List<ToDoNote> toDoNotes = new ArrayList<>();
 
@@ -62,8 +60,11 @@ public class MainActivity extends AppCompatActivity {
             sortBy = NotesContract.ToDoNotesEntry.COLUMN_IMPORTANCE + " DESC";
         else if (id == R.id.sortByDeadline)
             sortBy = NotesContract.ToDoNotesEntry.COLUMN_DEADLINE + " DESC";
-        else if (id == R.id.sortByDateOfCreate)
-            sortBy = NotesContract.ToDoNotesEntry.COLUMN_DATE_OF_CREATE + " DESC";
+        else if (id == R.id.showCompletedNotes) {
+            Intent intentToCompleted = new Intent(getApplicationContext(),
+                    CompletedNotesActivity.class);
+            startActivity(intentToCompleted);
+        }
         else sortBy = null;
         saveSort(sortBy);
         updateListNotes();
@@ -128,9 +129,9 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("ОТМЕНА", ((dialogInterface, i) -> {}))
                         .setNegativeButton("УДАЛИТЬ", (dialogInterface, i) -> remote(position))
                         .setNeutralButton("ПЕРЕМЕСТИТЬ", (dialog, which) -> {
-                            Intent intentToCompleted = new Intent(getApplicationContext(),
-                                    CompletedNotesActivity.class);
-                            startActivity(intentToCompleted);
+                            new WorkingInDB().transferNoteToCompleted
+                                    (getApplicationContext(), toDoNotes.get(position).getId());
+                            remote(position);
                         })
                         .show();
             }
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void remote (int position) {
         int id = toDoNotes.get(position).getId();
-        new WorkingInDB().remote(this, id);
+        new WorkingInDB().remoteFromToDoNotes(this, id);
         toDoNotes.remove(position);
         adapter.notifyItemRemoved(position);
     }

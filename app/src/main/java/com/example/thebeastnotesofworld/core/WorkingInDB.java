@@ -35,7 +35,7 @@ public class WorkingInDB {
         Cursor cursor = database.query(NotesContract.ToDoNotesEntry.TABLE_NAME,
                 null, null, null, null, null, sortBy);
         while (cursor.moveToNext()) {
-            toDoNotes.add(getNoteFromDB(cursor));
+            toDoNotes.add(getToDoNoteFromDB(cursor));
         }
         cursor.close();
         // КОСТЫЛЬ! Сортируем по текущим оставшимся дням
@@ -56,7 +56,7 @@ public class WorkingInDB {
                 selectionArgs, null, null, null);
         List<ToDoNote> toDoNotes = new ArrayList<>();
         while (cursor.moveToNext()) {
-            toDoNotes.add(getNoteFromDB(cursor));
+            toDoNotes.add(getToDoNoteFromDB(cursor));
         }
         cursor.close();
         return toDoNotes.get(0);
@@ -74,7 +74,7 @@ public class WorkingInDB {
         database.insert(NotesContract.ToDoNotesEntry.TABLE_NAME, null, contentValues);
     }
 
-    public void remote (Context context, int id) {
+    public void remoteFromToDoNotes(Context context, int id) {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getReadableDatabase();
         String where = NotesContract.ToDoNotesEntry._ID + " = ?";
@@ -85,25 +85,53 @@ public class WorkingInDB {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void transferNoteToCompleted (Context context, int id) {
         dbHelper = new NotesDBHelper(context);
-        database = dbHelper.getReadableDatabase();
+        database = dbHelper.getWritableDatabase();
         ToDoNote note = getOneNoteByID(context, id);
         ContentValues contentValues = new ContentValues();
         contentValues.put(NotesContract.CompletedToDoNotesEntry.COLUMN_TITLE, note.getTitle());
         contentValues.put(NotesContract.CompletedToDoNotesEntry.COLUMN_TEXT, note.getText());
         contentValues.put(NotesContract.CompletedToDoNotesEntry.COLUMN_DATE_OF_CREATE,
                 note.getDateOfCreate());
+        contentValues.put(NotesContract.CompletedToDoNotesEntry.COLUMN_IMPORTANCE,
+                note.getImportance());
         String dateOfCompleted = new SimpleDateFormat
                 ("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         contentValues.put(NotesContract.CompletedToDoNotesEntry.COLUMN_DATE_OF_COMPLETED,
                 dateOfCompleted);
         database.insert(NotesContract.CompletedToDoNotesEntry.TABLE_NAME,
                 null, contentValues);
+    }
 
+    public ArrayList<CompletedToDoNote> getCompletedNoteFromDB (Context context) {
+        dbHelper = new NotesDBHelper(context);
+        database = dbHelper.getWritableDatabase();
+        ArrayList<CompletedToDoNote> list = new ArrayList<>();
+        Cursor cursor = database.query(NotesContract.CompletedToDoNotesEntry.TABLE_NAME,
+                null, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow
+                    (NotesContract.CompletedToDoNotesEntry._ID));
+            String title = cursor.getString(cursor.getColumnIndexOrThrow
+                    (NotesContract.CompletedToDoNotesEntry.COLUMN_TITLE));
+            String text = cursor.getString(cursor.getColumnIndexOrThrow
+                    (NotesContract.CompletedToDoNotesEntry.COLUMN_TEXT));
+            String dateOfCreate = cursor.getString(cursor.getColumnIndexOrThrow
+                    (NotesContract.CompletedToDoNotesEntry.COLUMN_DATE_OF_CREATE));
+            int importance = cursor.getInt(cursor.getColumnIndexOrThrow
+                    (NotesContract.CompletedToDoNotesEntry.COLUMN_IMPORTANCE));
+            String dateOfCompleted = cursor.getString(cursor.getColumnIndexOrThrow
+                    (NotesContract.CompletedToDoNotesEntry.COLUMN_DATE_OF_COMPLETED));
+            CompletedToDoNote note = new CompletedToDoNote
+                    (id, title, text, dateOfCreate, importance, dateOfCompleted);
+            list.add(note);
+        }
+        cursor.close();
+        return list;
     }
 
     // Служебный метод для получения одной записи из БД
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private ToDoNote getNoteFromDB(Cursor cursor) {
+    private ToDoNote getToDoNoteFromDB(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.ToDoNotesEntry._ID));
         String title = cursor.getString(cursor.getColumnIndexOrThrow
                 (NotesContract.ToDoNotesEntry.COLUMN_TITLE));

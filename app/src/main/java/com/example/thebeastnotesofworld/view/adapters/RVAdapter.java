@@ -51,7 +51,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_note, parent);
+        View view = layoutInflater.inflate(R.layout.item_note, parent, false);
         return new ViewHolder(view);
     }
 

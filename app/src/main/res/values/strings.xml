@@ -15,7 +15,7 @@
     <string name="date_of_create">Дата создания:</string>
     <string name="sort_by_importance">Сортировка по важности</string>
     <string name="sort_by_day_to_deadline">Сортировка по срочности</string>
-    <string name="sort_by_date_of_create">Сортировка по дате создания</string>
+    <string name="sort_by_date_of_create">Показать выполненные заметки</string>
     <array name="showSort">
         <item>Важности</item>
         <item>Срочности</item>

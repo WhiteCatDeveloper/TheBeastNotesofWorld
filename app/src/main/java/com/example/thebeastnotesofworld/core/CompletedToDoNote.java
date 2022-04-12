@@ -9,11 +9,10 @@ public class CompletedToDoNote extends Note{
     private final int importance;
 
     public CompletedToDoNote(
-            int id, String title, String text, String dateOfCreate, int importance) {
+            int id, String title, String text, String dateOfCreate, int importance, String dateOfCompleted) {
         super(id, title, text, dateOfCreate);
         this.importance = importance;
-        this.dateOfCompleted = new SimpleDateFormat
-                ("dd-MM-yyyy", Locale.ENGLISH).format(new Date());
+        this.dateOfCompleted = dateOfCompleted;
     }
 
     public String getDateOfCompleted() {
