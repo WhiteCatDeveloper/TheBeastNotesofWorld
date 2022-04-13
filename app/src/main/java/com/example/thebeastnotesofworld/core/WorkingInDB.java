@@ -82,6 +82,23 @@ public class WorkingInDB {
         database.delete(NotesContract.ToDoNotesEntry.TABLE_NAME, where, whereArgs);
     }
 
+    // Служебный метод для получения одной записи из БД
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private ToDoNote getToDoNoteFromDB(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.ToDoNotesEntry._ID));
+        String title = cursor.getString(cursor.getColumnIndexOrThrow
+                (NotesContract.ToDoNotesEntry.COLUMN_TITLE));
+        String text = cursor.getString(cursor.getColumnIndexOrThrow
+                (NotesContract.ToDoNotesEntry.COLUMN_TEXT));
+        int importance = cursor.getInt(cursor.getColumnIndexOrThrow
+                (NotesContract.ToDoNotesEntry.COLUMN_IMPORTANCE));
+        int dayToDeadLine = cursor.getInt(cursor.getColumnIndexOrThrow
+                (NotesContract.ToDoNotesEntry.COLUMN_DEADLINE));
+        String dateOfCreate = cursor.getString(cursor.getColumnIndexOrThrow
+                (NotesContract.ToDoNotesEntry.COLUMN_DATE_OF_CREATE));
+        return new ToDoNote(id, title, text, importance, dayToDeadLine, dateOfCreate);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void transferNoteToCompleted (Context context, int id) {
         dbHelper = new NotesDBHelper(context);
@@ -129,22 +146,18 @@ public class WorkingInDB {
         return list;
     }
 
-    // Служебный метод для получения одной записи из БД
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private ToDoNote getToDoNoteFromDB(Cursor cursor) {
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.ToDoNotesEntry._ID));
-        String title = cursor.getString(cursor.getColumnIndexOrThrow
-                (NotesContract.ToDoNotesEntry.COLUMN_TITLE));
-        String text = cursor.getString(cursor.getColumnIndexOrThrow
-                (NotesContract.ToDoNotesEntry.COLUMN_TEXT));
-        int importance = cursor.getInt(cursor.getColumnIndexOrThrow
-                (NotesContract.ToDoNotesEntry.COLUMN_IMPORTANCE));
-        int dayToDeadLine = cursor.getInt(cursor.getColumnIndexOrThrow
-                (NotesContract.ToDoNotesEntry.COLUMN_DEADLINE));
-        String dateOfCreate = cursor.getString(cursor.getColumnIndexOrThrow
-                (NotesContract.ToDoNotesEntry.COLUMN_DATE_OF_CREATE));
-        return new ToDoNote(id, title, text, importance, dayToDeadLine, dateOfCreate);
+    public void remoteCompletedNote(Context context, int id) {
+        dbHelper = new NotesDBHelper(context);
+        database = dbHelper.getReadableDatabase();
+        String where = NotesContract.ToDoNotesEntry._ID + " = ?";
+        String[] whereArgs = new String[] {Integer.toString(id)};
+        database.delete(NotesContract.CompletedToDoNotesEntry.TABLE_NAME, where, whereArgs);
     }
 
+    public void remoteAllCompletedNotes (Context context) {
+        dbHelper = new NotesDBHelper(context);
+        database = dbHelper.getReadableDatabase();
+        database.execSQL("delete from " + NotesContract.CompletedToDoNotesEntry.TABLE_NAME);
+    }
 
 }

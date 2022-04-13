@@ -6,16 +6,6 @@
     android:orientation="vertical"
     tools:context=".view.CompletedNotesActivity">
 
-    <Button
-        android:id="@+id/buttonCompletedToBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
-        android:text="@string/to_back"
-        tools:ignore="TouchTargetSizeCheck" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCompletedNotes"
@@ -23,4 +13,18 @@
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:layout_weight="12" />
+
+    <Button
+        android:id="@+id/buttonCompletedRemoteAll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/remote_all" />
+
+    <Button
+        android:id="@+id/buttonCompletedToBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/to_back" />
 </LinearLayout>

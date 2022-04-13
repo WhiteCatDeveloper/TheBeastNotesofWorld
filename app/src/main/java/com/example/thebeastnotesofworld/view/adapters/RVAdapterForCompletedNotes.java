@@ -20,10 +20,19 @@ public class RVAdapterForCompletedNotes extends
         RecyclerView.Adapter<RVAdapterForCompletedNotes.ViewHolderCompleted> {
     private final LayoutInflater layoutInflater;
     private final List<CompletedToDoNote> list;
+    private OnCompletedNoteClickListener onCompletedNoteClickListener;
 
     public RVAdapterForCompletedNotes(Context context, List<CompletedToDoNote> list) {
         this.layoutInflater = LayoutInflater.from(context);
         this.list = list;
+    }
+
+    public interface OnCompletedNoteClickListener{
+        void onCompletedNoteClick (int position);
+    }
+
+    public void setOnNoteClickListener(OnCompletedNoteClickListener onCompletedNoteClickListener) {
+        this.onCompletedNoteClickListener = onCompletedNoteClickListener;
     }
 
     @NonNull
@@ -38,8 +47,10 @@ public class RVAdapterForCompletedNotes extends
         CompletedToDoNote note = list.get(position);
         holder.textViewTitle.setText(note.getTitle());
         holder.textViewText.setText(note.getText());
-        holder.textViewDateOfCreate.setText(note.getDateOfCreate());
-        holder.textViewDateOfCompleted.setText(note.getDateOfCompleted());
+        String dateOfCreate = "Дата создания: " + note.getDateOfCreate();
+        holder.textViewDateOfCreate.setText(dateOfCreate);
+        String dateOfCompleted = "Дата завершения: " + note.getDateOfCompleted();
+        holder.textViewDateOfCompleted.setText(dateOfCompleted);
         int colorId;
         switch (note.getImportance()) {
             case 1: colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.green);
@@ -71,6 +82,11 @@ public class RVAdapterForCompletedNotes extends
             this.textViewDateOfCreate = itemView.findViewById(R.id.textViewCompletedDateOfCreate);
             this.textViewDateOfCompleted = itemView.findViewById(R.id.textViewCompletedDateOfEnd);
             this.cardViewCompleted = itemView.findViewById(R.id.cardViewItemCompletedNote);
+            itemView.setOnClickListener(view -> {
+                if (onCompletedNoteClickListener != null) {
+                    onCompletedNoteClickListener.onCompletedNoteClick(getAdapterPosition());
+                }
+            });
         }
 
 
