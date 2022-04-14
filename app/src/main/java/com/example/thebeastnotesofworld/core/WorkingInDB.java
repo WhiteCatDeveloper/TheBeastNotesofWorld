@@ -27,8 +27,12 @@ public class WorkingInDB {
     private NotesDBHelper dbHelper;
     private SQLiteDatabase database;
 
+    /**
+     * Далее методы для работы с ToDoNote
+     */
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList<ToDoNote> getNotes(Context context, String sortBy){
+    public ArrayList<ToDoNote> getToDoNotes(Context context, String sortBy){
         ArrayList<ToDoNote> toDoNotes = new ArrayList<>();
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getReadableDatabase();
@@ -47,7 +51,7 @@ public class WorkingInDB {
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public ToDoNote getOneNoteByID(Context context, int id) {
+    public ToDoNote getOneToDoNoteByID(Context context, int id) {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getReadableDatabase();
         String selection = NotesContract.ToDoNotesEntry._ID + " == ?";
@@ -62,7 +66,7 @@ public class WorkingInDB {
         return toDoNotes.get(0);
     }
 
-    public void saveNewNote(Context context, String title, String text, int importance, int dayToDeadline, String dateOfCreate) {
+    public void saveNewToDoNote(Context context, String title, String text, int importance, int dayToDeadline, String dateOfCreate) {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -99,11 +103,16 @@ public class WorkingInDB {
         return new ToDoNote(id, title, text, importance, dayToDeadLine, dateOfCreate);
     }
 
+    /**
+     * Далее методы для работы с CompletedNote
+     */
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void transferNoteToCompleted (Context context, int id) {
+    public void copyNoteToCompleted(Context context, int id) {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getWritableDatabase();
-        ToDoNote note = getOneNoteByID(context, id);
+        ToDoNote note = getOneToDoNoteByID(context, id);
         ContentValues contentValues = new ContentValues();
         contentValues.put(NotesContract.CompletedToDoNotesEntry.COLUMN_TITLE, note.getTitle());
         contentValues.put(NotesContract.CompletedToDoNotesEntry.COLUMN_TEXT, note.getText());
@@ -158,6 +167,49 @@ public class WorkingInDB {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getReadableDatabase();
         database.execSQL("delete from " + NotesContract.CompletedToDoNotesEntry.TABLE_NAME);
+    }
+
+    /**
+     * Далее методы для работы с SimpleNote
+     */
+
+    public void saveNewSimpleNote(Context context, String title, String text, String dateOfCreate) {
+        dbHelper = new NotesDBHelper(context);
+        database = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NotesContract.ToDoNotesEntry.COLUMN_TITLE, title);
+        contentValues.put(NotesContract.ToDoNotesEntry.COLUMN_TEXT, text);
+        contentValues.put(NotesContract.ToDoNotesEntry.COLUMN_DATE_OF_CREATE, dateOfCreate);
+        database.insert(NotesContract.SimpleNoteEntry.TABLE_NAME, null, contentValues);
+    }
+
+    public ArrayList<SimpleNote> getAllSimpleNotes(Context context) {
+        ArrayList<SimpleNote> list = new ArrayList<>();
+        dbHelper = new NotesDBHelper(context);
+        database = dbHelper.getReadableDatabase();
+        Cursor cursor = database.query(NotesContract.SimpleNoteEntry.TABLE_NAME,
+                null, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.SimpleNoteEntry._ID));
+            String title = cursor.getString(cursor.getColumnIndexOrThrow
+                    (NotesContract.SimpleNoteEntry.COLUMN_TITLE));
+            String text = cursor.getString(cursor.getColumnIndexOrThrow
+                    (NotesContract.SimpleNoteEntry.COLUMN_TEXT));
+            String dateOfCreate = cursor.getString(cursor.getColumnIndexOrThrow
+                    (NotesContract.SimpleNoteEntry.COLUMN_DATE_OF_CREATE));
+            SimpleNote note = new SimpleNote(id, title, text, dateOfCreate);
+            list.add(note);
+        }
+        cursor.close();
+        return list;
+    }
+
+    public void remoteSimpleNote(Context context, int id) {
+        dbHelper = new NotesDBHelper(context);
+        database = dbHelper.getReadableDatabase();
+        String where = NotesContract.ToDoNotesEntry._ID + " = ?";
+        String[] whereArgs = new String[] {Integer.toString(id)};
+        database.delete(NotesContract.SimpleNoteEntry.TABLE_NAME, where, whereArgs);
     }
 
 }

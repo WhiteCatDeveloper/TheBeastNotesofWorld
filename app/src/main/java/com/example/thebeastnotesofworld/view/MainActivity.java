@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     // Залолняем список заметок при первом запуске
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setNotes() {
-        toDoNotes = new WorkingInDB().getNotes(this, sortBy);
+        toDoNotes = new WorkingInDB().getToDoNotes(this, sortBy);
     }
 
     // Добавляем новые значения в список из БД. Т.к нельзя просто присвоить списку значения другого
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     // Так же у адаптера вызываем перерисовку
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateListNotes() {
-        List<ToDoNote> newList = new WorkingInDB().getNotes(this, sortBy);
+        List<ToDoNote> newList = new WorkingInDB().getToDoNotes(this, sortBy);
         adapter.updateList(newList);
         toDoNotes.clear();
         toDoNotes.addAll(newList);
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("ОТМЕНА", ((dialogInterface, i) -> {}))
                         .setNegativeButton("УДАЛИТЬ", (dialogInterface, i) -> remote(position))
                         .setNeutralButton("ПЕРЕМЕСТИТЬ", (dialog, which) -> {
-                            new WorkingInDB().transferNoteToCompleted
+                            new WorkingInDB().copyNoteToCompleted
                                     (getApplicationContext(), toDoNotes.get(position).getId());
                             remote(position);
                         })

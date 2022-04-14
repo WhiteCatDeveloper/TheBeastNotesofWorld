@@ -41,7 +41,7 @@ public class AddNoteActivity extends AppCompatActivity {
         if (intent.hasExtra("idNote")) {
             editNote = true;
             idNote = intent.getIntExtra("idNote", 0);
-            setTextField(new WorkingInDB().getOneNoteByID(this, idNote));
+            setTextField(new WorkingInDB().getOneToDoNoteByID(this, idNote));
         }
         listeners();
     }
@@ -60,7 +60,7 @@ public class AddNoteActivity extends AppCompatActivity {
             int importance = spinnerImportance.getSelectedItemPosition();
             int dayToDeadline = Integer.parseInt(editTextDeadline.getText().toString());
             String dateOfCreate = getCurrentDate();
-            new WorkingInDB().saveNewNote(this, title, text, importance, dayToDeadline, dateOfCreate);
+            new WorkingInDB().saveNewToDoNote(this, title, text, importance, dayToDeadline, dateOfCreate);
     }
 
     private boolean checkField() {

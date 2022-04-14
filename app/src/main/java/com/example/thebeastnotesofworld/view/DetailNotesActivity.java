@@ -34,7 +34,7 @@ public class DetailNotesActivity extends AppCompatActivity {
         if (intent.hasExtra("idNote")) id = intent.getIntExtra("idNote", 0);
         init();
         listeners();
-        setTextView(new WorkingInDB().getOneNoteByID(this, id));
+        setTextView(new WorkingInDB().getOneToDoNoteByID(this, id));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
