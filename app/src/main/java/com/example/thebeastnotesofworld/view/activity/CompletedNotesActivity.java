@@ -1,4 +1,4 @@
-package com.example.thebeastnotesofworld.view;
+package com.example.thebeastnotesofworld.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

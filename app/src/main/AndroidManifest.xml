@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheBeastNotesOfWorld">
         <activity
-            android:name=".view.CompletedNotesActivity"
+            android:name=".view.activity.CompletedNotesActivity"
             android:exported="false" />
         <activity
-            android:name=".view.AddNoteActivity"
+            android:name=".view.activity.AddNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".view.DetailNotesActivity"
+            android:name=".view.activity.DetailNotesActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

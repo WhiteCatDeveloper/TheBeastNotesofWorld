@@ -1,4 +1,4 @@
-package com.example.thebeastnotesofworld.view;
+package com.example.thebeastnotesofworld.view.activity;
 
 // ЕЩЕ ЗАДАЧИ
 
