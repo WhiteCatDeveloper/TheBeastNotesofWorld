@@ -18,6 +18,9 @@
     <string name="sort_by_date_of_create">Показать выполненные заметки</string>
     <string name="remote_all">Удалить все</string>
     <string name="add_to_simple_note">Добавление простой заметки</string>
+    <string name="text_note">Текст заметки</string>
+    <string name="add_to_do_note">Создать задание</string>
+    <string name="add_simple_note">Добавить простую заметку</string>
     <array name="showSort">
         <item>Важности</item>
         <item>Срочности</item>
