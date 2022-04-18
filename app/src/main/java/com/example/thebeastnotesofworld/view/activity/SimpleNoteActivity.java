@@ -1,23 +1,25 @@
 package com.example.thebeastnotesofworld.view.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.SimpleNote;
+import com.example.thebeastnotesofworld.core.WorkingInDB;
 import com.example.thebeastnotesofworld.view.adapters.RVAdapterForSimpleNotes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleNoteActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private RVAdapterForSimpleNotes adapter;
-    private FloatingActionButton buttonAddSimpleNote;
-    private List<SimpleNote> simpleNoteList;
+    private final List<SimpleNote> simpleNoteList = new ArrayList<>();
 
 
     @Override
@@ -25,17 +27,33 @@ public class SimpleNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_note);
         getSimpleNote();
-        recyclerView = findViewById(R.id.recyclerViewSimpleNote);
-        buttonAddSimpleNote = findViewById(R.id.floatingActionButtonAddSimpleNote);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewSimpleNote);
+        FloatingActionButton buttonAddSimpleNote = findViewById(R.id.floatingActionButtonAddSimpleNote);
         adapter = new RVAdapterForSimpleNotes(this, simpleNoteList);
         recyclerView.setAdapter(adapter);
+        adapter.setOnSimpleNoteClickListener
+                (position -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Предупреждение!")
+                            .setMessage("Удалить заметку?")
+                            .setPositiveButton("ОТМЕНА", ((dialogInterface, i) -> {}))
+                            .setNegativeButton("УДАЛИТЬ",
+                                    (dialogInterface, i) -> remoteSimpleNote(position))
+                            .show();
+                });
+        buttonAddSimpleNote.setOnClickListener
+                (v -> startActivity(new Intent(this, AddNoteActivity.class)));
     }
 
 
-    private void getSimpleNote () {
-        simpleNoteList.add(new SimpleNote(1, "Title", "TEXT", "12343"));
-        simpleNoteList.add(new SimpleNote(2, "111111", "dgfaT", "12343"));
-        simpleNoteList.add(new SimpleNote(3, "!!!!!!!!!!!", "b;agvhdlkajbvnlvgvhklc ", "12343"));
-        simpleNoteList.add(new SimpleNote(4, "#@*&^%$", "bbfaKLHBCNKVLFMA;,BC", "12343"));
+    private void getSimpleNote() {
+        simpleNoteList.clear();
+        simpleNoteList.addAll(new WorkingInDB().getAllSimpleNotes(this));
+    }
+
+    private void remoteSimpleNote(int position) {
+        int id = simpleNoteList.get(position).getId();
+        new WorkingInDB().remoteSimpleNote(this, id);
+        adapter.notifyItemRemoved(position);
     }
 }

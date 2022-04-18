@@ -17,10 +17,20 @@ import java.util.List;
 public class RVAdapterForSimpleNotes extends RecyclerView.Adapter<RVAdapterForSimpleNotes.SimpleNoteViewHolder> {
     private final List<SimpleNote> list;
     private final LayoutInflater layoutInflater;
+    private OnSimpleNoteClickListener onSimpleNoteClickListener;
 
     public RVAdapterForSimpleNotes(Context context, List<SimpleNote> list) {
         this.list = list;
         this.layoutInflater = LayoutInflater.from(context);
+    }
+
+
+    public interface OnSimpleNoteClickListener {
+        void onLongClick(int position);
+    }
+
+    public void setOnSimpleNoteClickListener(OnSimpleNoteClickListener onSimpleNoteClickListener) {
+        this.onSimpleNoteClickListener = onSimpleNoteClickListener;
     }
 
     @NonNull
@@ -35,7 +45,8 @@ public class RVAdapterForSimpleNotes extends RecyclerView.Adapter<RVAdapterForSi
         SimpleNote note = list.get(position);
         holder.textViewTitle.setText(note.getTitle());
         holder.textViewText.setText(note.getText());
-        holder.textViewDateOfCreate.setText(note.getDateOfCreate());
+        String dateOfCreate = "Дата создания: " + note.getDateOfCreate();
+        holder.textViewDateOfCreate.setText(dateOfCreate);
     }
 
     @Override
@@ -52,6 +63,12 @@ public class RVAdapterForSimpleNotes extends RecyclerView.Adapter<RVAdapterForSi
             this.textViewTitle = itemView.findViewById(R.id.textViewSimpleNoteTitle);
             this.textViewText = itemView.findViewById(R.id.textViewSimpleNoteText);
             this.textViewDateOfCreate = itemView.findViewById(R.id.textViewSimpleNoteDateOfCreate);
+            itemView.setOnLongClickListener(v -> {
+                if (onSimpleNoteClickListener != null) {
+                    onSimpleNoteClickListener.onLongClick(getAdapterPosition());
+                }
+                return false;
+            });
         }
     }
  }

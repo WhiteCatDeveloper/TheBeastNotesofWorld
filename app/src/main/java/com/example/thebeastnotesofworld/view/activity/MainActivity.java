@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             sortBy = NotesContract.ToDoNotesEntry.COLUMN_DEADLINE + " DESC";
         else if (id == R.id.showCompletedNotes) {
             Intent intentToCompleted = new Intent(getApplicationContext(),
-                    CompletedNotesActivity.class);
+                    SimpleNoteActivity.class);
             startActivity(intentToCompleted);
         }
         else sortBy = null;
