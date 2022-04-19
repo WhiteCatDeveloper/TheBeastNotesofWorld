@@ -21,10 +21,13 @@
     <string name="text_note">Текст заметки</string>
     <string name="add_to_do_note">Создать задание</string>
     <string name="add_simple_note">Добавить простую заметку</string>
+    <string name="go_to_simple_note">Перейти к простым заметкам</string>
+    <string name="go_to_to_do_list">Перейти к задачам</string>
+    <string name="go_to_completed_to_do">Перейти к выполненым задачам</string>
+    <string name="text_show">ПОКАЗАТЬ:</string>
     <array name="showSort">
-        <item>Важности</item>
-        <item>Срочности</item>
-        <item>Дате создания</item>
+        <item>Сначала важные</item>
+        <item>Сначала срочные</item>
     </array>
     <string-array name="importance">
         <item>Не важно</item>

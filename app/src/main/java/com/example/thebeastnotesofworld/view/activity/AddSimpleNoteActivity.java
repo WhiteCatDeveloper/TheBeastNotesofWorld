@@ -2,9 +2,13 @@ package com.example.thebeastnotesofworld.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +27,28 @@ public class AddSimpleNoteActivity extends AppCompatActivity {
     private Button buttonSaveNote;
     private Button buttonAddToDoNote;
 
+    // Создание меню
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Слушатель на меню
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.goToSimpleNote) {
+            startActivity(new Intent(this, SimpleNoteActivity.class));
+        }else if (id == R.id.goToToDoNote){
+            startActivity(new Intent(this, ToDoNotesActivity.class));
+        }else if (id == R.id.goToCompletedNote) {
+            startActivity(new Intent(this, CompletedNotesActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +63,7 @@ public class AddSimpleNoteActivity extends AppCompatActivity {
 
     private void listeners() {
         buttonToBack.setOnClickListener(v -> startActivity
-                (new Intent(getApplicationContext(), MainActivity.class)));
+                (new Intent(getApplicationContext(), ToDoNotesActivity.class)));
         buttonAddToDoNote.setOnClickListener(v -> startActivity(
                 new Intent(getApplicationContext(), AddNoteActivity.class)
         ));

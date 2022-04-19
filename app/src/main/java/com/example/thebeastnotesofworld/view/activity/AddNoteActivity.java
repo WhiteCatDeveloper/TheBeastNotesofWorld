@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,6 +34,28 @@ public class AddNoteActivity extends AppCompatActivity {
     private Button buttonToBack;
     private boolean editNote = false;
     private int idNote;
+
+    // Создание меню
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Слушатель на меню
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.goToSimpleNote) {
+            startActivity(new Intent(this, SimpleNoteActivity.class));
+        }else if (id == R.id.goToToDoNote){
+            startActivity(new Intent(this, ToDoNotesActivity.class));
+        }else if (id == R.id.goToCompletedNote) {
+            startActivity(new Intent(this, CompletedNotesActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -113,7 +139,7 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void toMain () {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ToDoNotesActivity.class);
         startActivity(intent);
     }
 

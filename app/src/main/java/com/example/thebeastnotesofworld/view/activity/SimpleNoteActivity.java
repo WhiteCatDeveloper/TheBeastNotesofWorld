@@ -2,7 +2,11 @@ package com.example.thebeastnotesofworld.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +24,28 @@ public class SimpleNoteActivity extends AppCompatActivity {
 
     private RVAdapterForSimpleNotes adapter;
     private final List<SimpleNote> simpleNoteList = new ArrayList<>();
+
+    // Создание меню
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Слушатель на меню
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.goToSimpleNote) {
+            startActivity(new Intent(this, SimpleNoteActivity.class));
+        }else if (id == R.id.goToToDoNote){
+            startActivity(new Intent(this, ToDoNotesActivity.class));
+        }else if (id == R.id.goToCompletedNote) {
+            startActivity(new Intent(this, CompletedNotesActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     @Override

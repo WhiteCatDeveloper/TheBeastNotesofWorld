@@ -25,7 +25,7 @@
             android:name=".view.activity.DetailNotesActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".view.activity.ToDoNotesActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

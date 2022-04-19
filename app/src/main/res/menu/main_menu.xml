@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/sort_by_importance" android:id="@+id/sortByImportance"/>
-    <item android:title="@string/sort_by_day_to_deadline" android:id="@+id/sortByDeadline"/>
-    <item android:title="@string/sort_by_date_of_create" android:id="@+id/showCompletedNotes"/>
+    <item android:title="@string/go_to_simple_note" android:id="@+id/goToSimpleNote"/>
+    <item android:title="@string/go_to_to_do_list" android:id="@+id/goToToDoNote"/>
+    <item android:title="@string/go_to_completed_to_do" android:id="@+id/goToCompletedNote"/>
 
 </menu>

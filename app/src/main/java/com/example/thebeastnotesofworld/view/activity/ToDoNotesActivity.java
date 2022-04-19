@@ -18,6 +18,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.ToDoNote;
@@ -30,10 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class ToDoNotesActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButtonAddNote;
-    private RecyclerView recyclerViewNotes;
+    private Spinner spinnerSortBy;
     private RVAdapter adapter;
     private SharedPreferences sharedPreferences;
     public static final String APP_PREFERENCES = "mySettings";
@@ -52,22 +55,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Слушатель на меню
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.sortByImportance)
-            sortBy = NotesContract.ToDoNotesEntry.COLUMN_IMPORTANCE + " DESC";
-        else if (id == R.id.sortByDeadline)
-            sortBy = NotesContract.ToDoNotesEntry.COLUMN_DEADLINE + " DESC";
-        else if (id == R.id.showCompletedNotes) {
-            Intent intentToCompleted = new Intent(getApplicationContext(),
-                    SimpleNoteActivity.class);
-            startActivity(intentToCompleted);
+        if (id == R.id.goToSimpleNote) {
+            startActivity(new Intent(this, SimpleNoteActivity.class));
+        }else if (id == R.id.goToToDoNote){
+            startActivity(new Intent(this, ToDoNotesActivity.class));
+        }else if (id == R.id.goToCompletedNote) {
+            startActivity(new Intent(this, CompletedNotesActivity.class));
         }
-        else sortBy = null;
-        saveSort(sortBy);
-        updateListNotes();
         return super.onOptionsItemSelected(item);
     }
 
@@ -80,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
         getSort();
         setNotes();
         floatingActionButtonAddNote = findViewById(R.id.floatingActionButtonAddNote);
-        recyclerViewNotes = findViewById(R.id.recyclerViewNotes);
+        spinnerSortBy = findViewById(R.id.spinnerShowSort);
+        RecyclerView recyclerViewNotes = findViewById(R.id.recyclerViewNotes);
         adapter = new RVAdapter(this, toDoNotes);
         recyclerViewNotes.setAdapter(adapter);
         listeners();
@@ -106,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void listeners() {
         floatingActionButtonAddNote.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+            Intent intent = new Intent(ToDoNotesActivity.this, AddNoteActivity.class);
             startActivity(intent);
          });
 
@@ -123,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onLongClick(int position) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ToDoNotesActivity.this);
                 builder.setTitle("Предупреждение!")
                         .setMessage("Переместить запись в выполненное или удалить?")
                         .setPositiveButton("ОТМЕНА", ((dialogInterface, i) -> {}))
@@ -134,6 +132,25 @@ public class MainActivity extends AppCompatActivity {
                             remote(position);
                         })
                         .show();
+            }
+        });
+        spinnerSortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0: sortBy = NotesContract.ToDoNotesEntry.COLUMN_IMPORTANCE + " DESC";
+                    break;
+                    case 1: sortBy = NotesContract.ToDoNotesEntry.COLUMN_DEADLINE + " DESC";
+                    break;
+                    default: sortBy = null;
+                }
+                saveSort(sortBy);
+                updateListNotes();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                sortBy = null;
             }
         });
 
