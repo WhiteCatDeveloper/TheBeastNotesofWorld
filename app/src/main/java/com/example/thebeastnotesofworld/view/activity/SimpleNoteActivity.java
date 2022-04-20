@@ -68,7 +68,7 @@ public class SimpleNoteActivity extends AppCompatActivity {
                             .show();
                 });
         buttonAddSimpleNote.setOnClickListener
-                (v -> startActivity(new Intent(this, AddNoteActivity.class)));
+                (v -> startActivity(new Intent(this, AddSimpleNoteActivity.class)));
     }
 
 
@@ -80,6 +80,7 @@ public class SimpleNoteActivity extends AppCompatActivity {
     private void remoteSimpleNote(int position) {
         int id = simpleNoteList.get(position).getId();
         new WorkingInDB().remoteSimpleNote(this, id);
+        simpleNoteList.remove(position);
         adapter.notifyItemRemoved(position);
     }
 }

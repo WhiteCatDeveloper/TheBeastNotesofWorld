@@ -32,6 +32,7 @@ public class AddNoteActivity extends AppCompatActivity {
     private EditText editTextDeadline;
     private Button buttonSave;
     private Button buttonToBack;
+    private Button buttonGoToAddSimple;
     private boolean editNote = false;
     private int idNote;
 
@@ -136,6 +137,8 @@ public class AddNoteActivity extends AppCompatActivity {
         });
 
         buttonToBack.setOnClickListener(view -> toMain());
+        buttonGoToAddSimple.setOnClickListener(v -> startActivity(
+                new Intent(this, AddSimpleNoteActivity.class)));
     }
 
     private void toMain () {
@@ -151,5 +154,6 @@ public class AddNoteActivity extends AppCompatActivity {
         editTextDeadline = findViewById(R.id.editTextDeadline);
         buttonSave = findViewById(R.id.buttonSaveNewNote);
         buttonToBack = findViewById(R.id.buttonToBack);
+        buttonGoToAddSimple = findViewById(R.id.buttonToAddSimpleNote);
     }
 }

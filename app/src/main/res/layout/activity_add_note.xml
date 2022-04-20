@@ -122,6 +122,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonSaveNewNote" />
 
+            <Button
+                android:id="@+id/buttonToAddSimpleNote"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/go_to_create_simple_note"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonToBack" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

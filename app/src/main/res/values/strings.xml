@@ -25,6 +25,8 @@
     <string name="go_to_to_do_list">Перейти к задачам</string>
     <string name="go_to_completed_to_do">Перейти к выполненым задачам</string>
     <string name="text_show">ПОКАЗАТЬ:</string>
+    <string name="go_to_create_simple_note">Создать простую заметку</string>
+    <string name="to_back_simple_note">Назад (к простым заметкам)</string>
     <array name="showSort">
         <item>Сначала важные</item>
         <item>Сначала срочные</item>

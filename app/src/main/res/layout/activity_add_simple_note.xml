@@ -4,12 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/teal_200"
     tools:context=".view.activity.AddSimpleNoteActivity">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="ScrollViewCount,UselessParent">
 
     <TextView
         android:id="@+id/textViewAddSimpleNote"
@@ -39,23 +35,21 @@
         android:autofillHints=""/>
 
     <Button
-        android:id="@+id/buttonSimpleToBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/to_back" />
-
-    <Button
         android:id="@+id/buttonSaveSimpleNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save" />
 
     <Button
+        android:id="@+id/buttonSimpleToBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to_back_simple_note" />
+
+    <Button
         android:id="@+id/buttonAddToDoNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_to_do_note" />
-
-    </ScrollView>
 
 </LinearLayout>

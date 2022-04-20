@@ -72,7 +72,7 @@ public class ToDoNotesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_to_do_notes);
         sharedPreferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         getSort();
         setNotes();

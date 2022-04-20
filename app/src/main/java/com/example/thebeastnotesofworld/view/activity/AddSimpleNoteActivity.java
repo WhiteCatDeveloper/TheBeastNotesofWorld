@@ -62,30 +62,39 @@ public class AddSimpleNoteActivity extends AppCompatActivity {
     }
 
     private void listeners() {
-        buttonToBack.setOnClickListener(v -> startActivity
-                (new Intent(getApplicationContext(), ToDoNotesActivity.class)));
+        buttonToBack.setOnClickListener(v -> toSimpleActivity());
         buttonAddToDoNote.setOnClickListener(v -> startActivity(
                 new Intent(getApplicationContext(), AddNoteActivity.class)
         ));
         buttonSaveNote.setOnClickListener(v -> {
             if (isChecked()) {
-                String title = editTextTitle.getText().toString();
-                String text = editTextText.getText().toString();
-                String dateOfCreate = new SimpleDateFormat
-                        ("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                new WorkingInDB().saveNewSimpleNote(getApplicationContext(), title, text, dateOfCreate);
-            }
-            else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Предупреждение")
-                        .setMessage("Не все поля заполнены")
-                        .setPositiveButton("OK", (dialog, which) -> {})
-                        .show();
-            }
+                saveSimpleNote();
+                toSimpleActivity();
+            } else showAlertDialog();
         });
+    }
+
+    private void saveSimpleNote() {
+            String title = editTextTitle.getText().toString();
+            String text = editTextText.getText().toString();
+            String dateOfCreate = new SimpleDateFormat
+                    ("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+            new WorkingInDB().saveNewSimpleNote(this, title, text, dateOfCreate);
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Предупреждение")
+                .setMessage("Не все поля заполнены")
+                .setPositiveButton("OK", (dialog, which) -> {})
+                .show();
     }
 
     private boolean isChecked () {
         return editTextTitle.length() != 0 && editTextText.length() != 0;
+    }
+
+    private void toSimpleActivity() {
+        startActivity(new Intent(getApplicationContext(), SimpleNoteActivity.class));
     }
 }
