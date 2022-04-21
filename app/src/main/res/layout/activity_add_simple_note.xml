@@ -3,53 +3,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/teal_200"
+    android:orientation="vertical"
     tools:context=".view.activity.AddSimpleNoteActivity">
 
-    <TextView
-        android:id="@+id/textViewAddSimpleNote"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="@string/add_simple_note" />
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
-    <EditText
-        android:id="@+id/editTextAddSimpleTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:hint="@string/title"
-        android:autofillHints="" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextAddSimpleText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:hint="@string/text_note"
-        android:autofillHints=""/>
+            <TextView
+                android:id="@+id/textViewAddSimpleNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/add_simple_note"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonSaveSimpleNote"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save" />
+            <EditText
+                android:id="@+id/editTextAddSimpleTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/title"
+                android:inputType="textMultiLine"
+                android:textCursorDrawable="@null" />
 
-    <Button
-        android:id="@+id/buttonSimpleToBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/to_back_simple_note" />
+            <EditText
+                android:id="@+id/editTextAddSimpleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/text_note"
+                android:inputType="textMultiLine"
+                android:textCursorDrawable="@null" />
 
-    <Button
-        android:id="@+id/buttonAddToDoNote"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_to_do_note" />
+            <Button
+                android:id="@+id/buttonSaveSimpleNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save" />
+
+            <Button
+                android:id="@+id/buttonSimpleToBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/to_back_simple_note" />
+
+            <Button
+                android:id="@+id/buttonAddToDoNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_to_do_note" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
