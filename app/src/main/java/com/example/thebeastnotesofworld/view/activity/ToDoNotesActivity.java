@@ -10,6 +10,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.example.thebeastnotesofworld.R;
+import com.example.thebeastnotesofworld.core.MyWorkManager;
 import com.example.thebeastnotesofworld.core.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
 import com.example.thebeastnotesofworld.view.adapters.RVAdapter;
@@ -82,6 +85,8 @@ public class ToDoNotesActivity extends AppCompatActivity {
         adapter = new RVAdapter(this, toDoNotes);
         recyclerViewNotes.setAdapter(adapter);
         listeners();
+        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(MyWorkManager.class).build();
+        WorkManager.getInstance().enqueue(oneTimeWorkRequest);
     }
 
     // Залолняем список заметок при первом запуске
