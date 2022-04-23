@@ -5,14 +5,6 @@ package com.example.thebeastnotesofworld.view.activity;
 // 3. Увеличить апи до 26.
 //              3.1 Избавиться от RequiresApi
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -24,12 +16,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.MyWorkManager;
 import com.example.thebeastnotesofworld.core.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
-import com.example.thebeastnotesofworld.view.adapters.RVAdapter;
 import com.example.thebeastnotesofworld.db.NotesContract;
+import com.example.thebeastnotesofworld.view.adapters.RVAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -86,8 +86,9 @@ public class ToDoNotesActivity extends AppCompatActivity {
         recyclerViewNotes.setAdapter(adapter);
         listeners();
         OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(MyWorkManager.class).build();
-        WorkManager.getInstance().enqueue(oneTimeWorkRequest);
+        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
     }
+
 
     // Залолняем список заметок при первом запуске
     @RequiresApi(api = Build.VERSION_CODES.O)

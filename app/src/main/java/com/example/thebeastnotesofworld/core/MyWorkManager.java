@@ -1,7 +1,10 @@
 package com.example.thebeastnotesofworld.core;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -9,6 +12,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+
+import com.example.thebeastnotesofworld.R;
 
 import java.util.ArrayList;
 
@@ -34,6 +39,7 @@ public class MyWorkManager extends Worker {
     @Override
     public Result doWork() {
         if (countNeedNotification() != 0) {
+            Log.e("WMERR", "sucsessful");
             setNotification();
         }
         return Result.success();
@@ -46,13 +52,33 @@ public class MyWorkManager extends Worker {
                 new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
         String title = "ЕСТЬ СРОЧНЫЕ ДЕЛА!";
         String text = getTextNotification();
-        builder.setContentTitle(title)
+        createNotificationChannel();
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
         NotificationManagerCompat notificationManager =
                 NotificationManagerCompat.from(getApplicationContext());
         notificationManager.notify(NOTIFY_ID, builder.build());
+        Log.e("WMERR", "" + text);
+
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "my_channel";
+            String description = "";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager =
+                    getApplicationContext().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     // Возвращает нужный текст для заметки в зависимости от ситуации с задачами
@@ -85,6 +111,7 @@ public class MyWorkManager extends Worker {
             if (note.calculateDayToDeadline() < 1) dayEnd++;
                 else if (note.calculateDayToDeadline() == 1) deadLine++;
         }
+        Log.e("WMERR", "" + dayEnd + ", " + deadLine);
         int result;
         if (dayEnd == 0 && deadLine == 0) result = 0;
         else if (dayEnd > 0 && deadLine == 0) result = 1;
