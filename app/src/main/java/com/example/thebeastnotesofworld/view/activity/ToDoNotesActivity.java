@@ -85,8 +85,9 @@ public class ToDoNotesActivity extends AppCompatActivity {
         adapter = new RVAdapter(this, toDoNotes);
         recyclerViewNotes.setAdapter(adapter);
         listeners();
-        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(MyWorkManager.class).build();
-        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
+
+//        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(MyWorkManager.class).build();
+//        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
     }
 
 
