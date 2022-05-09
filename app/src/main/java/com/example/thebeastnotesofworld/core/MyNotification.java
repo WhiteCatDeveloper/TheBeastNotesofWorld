@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.thebeastnotesofworld.R;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.view.activity.ToDoNotesActivity;
 
 import java.util.ArrayList;

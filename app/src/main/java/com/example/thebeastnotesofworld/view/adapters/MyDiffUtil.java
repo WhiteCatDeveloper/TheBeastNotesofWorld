@@ -5,7 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.example.thebeastnotesofworld.core.ToDoNote;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 
 import java.util.List;
 

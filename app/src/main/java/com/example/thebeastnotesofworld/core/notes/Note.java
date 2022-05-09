@@ -1,4 +1,4 @@
-package com.example.thebeastnotesofworld.core;
+package com.example.thebeastnotesofworld.core.notes;
 
 public abstract class Note {
     private final int id;

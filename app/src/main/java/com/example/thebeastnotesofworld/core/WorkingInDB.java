@@ -8,6 +8,9 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.thebeastnotesofworld.core.notes.CompletedToDoNote;
+import com.example.thebeastnotesofworld.core.notes.SimpleNote;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.db.NotesContract;
 import com.example.thebeastnotesofworld.db.NotesDBHelper;
 

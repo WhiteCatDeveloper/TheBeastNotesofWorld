@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.ToDoNote;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
 
 import java.text.SimpleDateFormat;

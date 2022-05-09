@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.CompletedToDoNote;
+import com.example.thebeastnotesofworld.core.notes.CompletedToDoNote;
 
 import java.util.List;
 

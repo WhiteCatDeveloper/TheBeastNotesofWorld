@@ -1,10 +1,8 @@
-package com.example.thebeastnotesofworld.core;
+package com.example.thebeastnotesofworld.core.notes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import com.example.thebeastnotesofworld.core.notes.Note;
 
-public class CompletedToDoNote extends Note{
+public class CompletedToDoNote extends Note {
     private final String dateOfCompleted;
     private final int importance;
 

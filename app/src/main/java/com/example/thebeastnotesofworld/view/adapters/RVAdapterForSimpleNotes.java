@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.SimpleNote;
+import com.example.thebeastnotesofworld.core.notes.SimpleNote;
 
 import java.util.List;
 

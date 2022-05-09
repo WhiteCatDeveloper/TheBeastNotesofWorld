@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.ToDoNote;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
 
 public class DetailNotesActivity extends AppCompatActivity {

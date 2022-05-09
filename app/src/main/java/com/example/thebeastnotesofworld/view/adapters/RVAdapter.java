@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.ToDoNote;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 
 import java.util.List;
 

@@ -20,6 +20,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.thebeastnotesofworld.R;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.view.activity.ToDoNotesActivity;
 
 

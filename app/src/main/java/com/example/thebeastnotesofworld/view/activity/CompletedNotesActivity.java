@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.CompletedToDoNote;
+import com.example.thebeastnotesofworld.core.notes.CompletedToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
 import com.example.thebeastnotesofworld.view.adapters.RVAdapterForCompletedNotes;
 
