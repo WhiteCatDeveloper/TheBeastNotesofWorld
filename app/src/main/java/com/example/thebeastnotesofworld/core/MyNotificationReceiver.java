@@ -9,7 +9,6 @@ import androidx.annotation.RequiresApi;
 
 public class MyNotificationReceiver extends BroadcastReceiver {
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
         new MyNotification().createNotificationIfNeed(context);

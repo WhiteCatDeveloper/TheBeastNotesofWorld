@@ -6,10 +6,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Constraints;
@@ -22,7 +20,6 @@ import androidx.work.WorkerParameters;
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.view.activity.ToDoNotesActivity;
-
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -45,13 +42,11 @@ public class MyWorkManager extends Worker {
     private int dayEnd = 0;
     private int deadLine = 0;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public MyWorkManager(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         countNeedNotification();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setWorkManager() {
         int hourOfTheDay = 10; // When to run the job
         int repeatInterval = 1; // In days
@@ -74,9 +69,6 @@ public class MyWorkManager extends Worker {
                 workRequest);
     }
 
-
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private long calculateFlex(int hourOfTheDay, int periodInDays) {
 
         // Initialize the calendar with today and the preferred time to run the job.
@@ -99,7 +91,6 @@ public class MyWorkManager extends Worker {
     }
 
     @NonNull
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public Result doWork() {
         if (dayEnd != 0 || deadLine != 0) {
@@ -109,7 +100,6 @@ public class MyWorkManager extends Worker {
     }
 
     // Создает уведомление
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setNotification() {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
@@ -136,7 +126,6 @@ public class MyWorkManager extends Worker {
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "my_channel";
             String description = "";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -147,12 +136,11 @@ public class MyWorkManager extends Worker {
             NotificationManager notificationManager =
                     getApplicationContext().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-        }
+
     }
 
     // Возвращает нужный текст для заметки в зависимости от ситуации с задачами
     @NonNull
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private String getTextNotification () {
         String s = "Просроченые задачи: " + dayEnd;
         String s1 = "Выполнить сегодня: " + deadLine;
@@ -163,7 +151,6 @@ public class MyWorkManager extends Worker {
 
 
     // Проходит все текущие задачи в БД и устанавливает значения у переменных dayEnd и deadline
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void countNeedNotification () {
         ArrayList<ToDoNote> list = new WorkingInDB().getToDoNotes(getApplicationContext(), null);
         for (ToDoNote note : list) {

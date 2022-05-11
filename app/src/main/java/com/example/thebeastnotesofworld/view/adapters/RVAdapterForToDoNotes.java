@@ -1,14 +1,12 @@
 package com.example.thebeastnotesofworld.view.adapters;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
@@ -19,13 +17,13 @@ import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+public class RVAdapterForToDoNotes extends RecyclerView.Adapter<RVAdapterForToDoNotes.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<ToDoNote> toDoNoteList;
     private OnNoteClickListener onNoteClickListener;
 
-    public RVAdapter(Context context, List<ToDoNote> toDoNoteList) {
+    public RVAdapterForToDoNotes(Context context, List<ToDoNote> toDoNoteList) {
         this.layoutInflater = LayoutInflater.from(context);
         this.toDoNoteList = toDoNoteList;
     }
@@ -55,7 +53,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ToDoNote toDoNote = toDoNoteList.get(position);
@@ -104,6 +101,46 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 }
                 return true;
             });
+        }
+    }
+
+
+    private static class MyDiffUtil extends DiffUtil.Callback {
+
+        private final List<ToDoNote> oldList;
+        private final List<ToDoNote> newList;
+
+        public MyDiffUtil(List<ToDoNote> oldList, List<ToDoNote> newList) {
+            this.oldList = oldList;
+            this.newList = newList;
+        }
+
+        @Override
+        public int getOldListSize() {
+            return oldList.size();
+        }
+
+        @Override
+        public int getNewListSize() {
+            return newList.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            ToDoNote oldToDoNote = oldList.get(oldItemPosition);
+            ToDoNote newToDoNote = newList.get(newItemPosition);
+            return oldToDoNote.getId() == newToDoNote.getId();
+        }
+
+
+        // Адаптер ничего не знает о полях text и dateOfCreate, их можно не сравнивать
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            ToDoNote oldToDoNote = oldList.get(oldItemPosition);
+            ToDoNote newToDoNote = newList.get(newItemPosition);
+            return oldToDoNote.getTitle().equals(newToDoNote.getTitle()) &&
+                    oldToDoNote.getImportance() == newToDoNote.getImportance() &&
+                    oldToDoNote.getDayToDeadLine() == newToDoNote.getDayToDeadLine();
         }
     }
 }

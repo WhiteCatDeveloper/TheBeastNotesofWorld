@@ -1,5 +1,6 @@
 package com.example.thebeastnotesofworld.core;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -21,9 +22,9 @@ public class MyAlarmManager {
             notifyTime.set(Calendar.SECOND,0);
 
             Intent intent = new Intent(context, MyNotificationReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, notifyTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC, notifyTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
             saveStateAlarm();
         }
 
@@ -35,7 +36,8 @@ public class MyAlarmManager {
     private static final String KEY_IS_SET_ALARM = "is_set_alarm";
     private static final String SHARED_NAME = "ALARM";
     // В разных версиях можно использовать разное значение переменной для перезапуска
-    private static final String VALUE_IS_SET_ALARM = "Alarm: true";
+    // (В релизе переделать на boolean)
+    private static final String VALUE_IS_SET_ALARM = "Alarm:true";
 
 
     private boolean checkIsNotSetAlarm() {

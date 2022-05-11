@@ -4,9 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 
 import com.example.thebeastnotesofworld.core.notes.CompletedToDoNote;
 import com.example.thebeastnotesofworld.core.notes.SimpleNote;
@@ -16,7 +13,6 @@ import com.example.thebeastnotesofworld.db.NotesDBHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -34,7 +30,6 @@ public class WorkingInDB {
      * Далее методы для работы с ToDoNote
      */
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList<ToDoNote> getToDoNotes(Context context, String sortBy){
         ArrayList<ToDoNote> toDoNotes = new ArrayList<>();
         dbHelper = new NotesDBHelper(context);
@@ -47,13 +42,12 @@ public class WorkingInDB {
         cursor.close();
         // КОСТЫЛЬ! Сортируем по текущим оставшимся дням
         if (sortBy!=null && sortBy.equals(NotesContract.ToDoNotesEntry.COLUMN_DEADLINE + " DESC")) {
-            Collections.sort(toDoNotes, ToDoNote.COMPARE_BY_CURRENT_DAY_TO_DEADLINE);
+            toDoNotes.sort(ToDoNote.COMPARE_BY_CURRENT_DAY_TO_DEADLINE);
         }
         return toDoNotes;
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public ToDoNote getOneToDoNoteByID(Context context, int id) {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getReadableDatabase();
@@ -90,7 +84,6 @@ public class WorkingInDB {
     }
 
     // Служебный метод для получения одной записи из БД
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private ToDoNote getToDoNoteFromDB(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndexOrThrow(NotesContract.ToDoNotesEntry._ID));
         String title = cursor.getString(cursor.getColumnIndexOrThrow
@@ -111,7 +104,6 @@ public class WorkingInDB {
      */
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void copyNoteToCompleted(Context context, int id) {
         dbHelper = new NotesDBHelper(context);
         database = dbHelper.getWritableDatabase();

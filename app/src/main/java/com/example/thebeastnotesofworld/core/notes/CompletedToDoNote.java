@@ -1,7 +1,5 @@
 package com.example.thebeastnotesofworld.core.notes;
 
-import com.example.thebeastnotesofworld.core.notes.Note;
-
 public class CompletedToDoNote extends Note {
     private final String dateOfCompleted;
     private final int importance;

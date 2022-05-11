@@ -1,9 +1,5 @@
 package com.example.thebeastnotesofworld.core.notes;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -12,7 +8,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class ToDoNote {
     private final int id;
     private final String title;
@@ -73,7 +68,6 @@ public class ToDoNote {
      * Из поля заметки получаем сколько дней было дано на выполнение и из них вычитаются прошедшие дни.
      * И метод соответственно возвращает количество оставшихся дней
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public int calculateDayToDeadline() {
         String currentDate = new SimpleDateFormat
                 ("dd-MM-yyyy", Locale.ENGLISH).format(new Date());

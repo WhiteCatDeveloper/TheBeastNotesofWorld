@@ -5,10 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -28,7 +26,6 @@ public class MyNotification {
     private int dayEnd = 0;
     private int deadLine = 0;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void createNotificationIfNeed(Context context) {
         countNeedNotification(context);
             if (dayEnd != 0 || deadLine != 0) {
@@ -38,7 +35,6 @@ public class MyNotification {
 
 
     // Создает уведомление
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setNotification(Context context) {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, CHANNEL_ID);
@@ -65,7 +61,6 @@ public class MyNotification {
     private void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "my_channel";
             String description = "";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -76,12 +71,11 @@ public class MyNotification {
             NotificationManager notificationManager =
                     context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-        }
+
     }
 
     // Возвращает нужный текст для заметки в зависимости от ситуации с задачами
     @NonNull
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private String getTextNotification () {
         String s = "Просроченые задачи: " + dayEnd;
         String s1 = "Выполнить сегодня: " + deadLine;
@@ -92,7 +86,6 @@ public class MyNotification {
 
 
     // Проходит все текущие задачи в БД и устанавливает значения у переменных dayEnd и deadline
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void countNeedNotification (Context context) {
         ArrayList<ToDoNote> list = new WorkingInDB().getToDoNotes(context, null);
         for (ToDoNote note : list) {

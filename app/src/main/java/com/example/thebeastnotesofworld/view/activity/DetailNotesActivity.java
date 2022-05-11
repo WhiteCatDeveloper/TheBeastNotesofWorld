@@ -1,11 +1,6 @@
 package com.example.thebeastnotesofworld.view.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,9 +8,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 
 public class DetailNotesActivity extends AppCompatActivity {
 
@@ -51,8 +49,6 @@ public class DetailNotesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +60,6 @@ public class DetailNotesActivity extends AppCompatActivity {
         setTextView(new WorkingInDB().getOneToDoNoteByID(this, id));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setTextView(ToDoNote toDoNote) {
         textViewDetailTitle.setText(toDoNote.getTitle());
         textViewDetailNote.setText(toDoNote.getText());

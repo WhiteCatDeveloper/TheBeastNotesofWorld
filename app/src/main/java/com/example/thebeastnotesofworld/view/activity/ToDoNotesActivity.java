@@ -1,13 +1,7 @@
 package com.example.thebeastnotesofworld.view.activity;
 
-// ЕЩЕ ЗАДАЧИ
-
-// 3. Увеличить апи до 26.
-//              3.1 Избавиться от RequiresApi
-
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,17 +11,16 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.MyAlarmManager;
-import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.db.NotesContract;
-import com.example.thebeastnotesofworld.view.adapters.RVAdapter;
+import com.example.thebeastnotesofworld.view.adapters.RVAdapterForToDoNotes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -38,7 +31,7 @@ public class ToDoNotesActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButtonAddNote;
     private Spinner spinnerSortBy;
-    private RVAdapter adapter;
+    private RVAdapterForToDoNotes adapter;
     private SharedPreferences sharedPreferences;
     public static final String APP_PREFERENCES = "mySettings";
     private static final String SETTINGS_SORT_BY = "settingsSortBy";
@@ -69,7 +62,6 @@ public class ToDoNotesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,19 +72,14 @@ public class ToDoNotesActivity extends AppCompatActivity {
         floatingActionButtonAddNote = findViewById(R.id.floatingActionButtonAddNote);
         spinnerSortBy = findViewById(R.id.spinnerShowSort);
         RecyclerView recyclerViewNotes = findViewById(R.id.recyclerViewNotes);
-        adapter = new RVAdapter(this, toDoNotes);
+        adapter = new RVAdapterForToDoNotes(this, toDoNotes);
         recyclerViewNotes.setAdapter(adapter);
         listeners();
-
         new MyAlarmManager().setAlarm(this);
-
-//        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(MyWorkManager.class).build();
-//        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
     }
 
 
     // Залолняем список заметок при первом запуске
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setNotes() {
         toDoNotes = new WorkingInDB().getToDoNotes(this, sortBy);
     }
@@ -100,7 +87,6 @@ public class ToDoNotesActivity extends AppCompatActivity {
     // Добавляем новые значения в список из БД. Т.к нельзя просто присвоить списку значения другого
     // списка, то очищаем его и добавляем новые значения через метод коллекций addAll
     // Так же у адаптера вызываем перерисовку
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateListNotes() {
         List<ToDoNote> newList = new WorkingInDB().getToDoNotes(this, sortBy);
         adapter.updateList(newList);
@@ -115,8 +101,7 @@ public class ToDoNotesActivity extends AppCompatActivity {
             startActivity(intent);
          });
 
-        adapter.setOnNoteClickListener(new RVAdapter.OnNoteClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
+        adapter.setOnNoteClickListener(new RVAdapterForToDoNotes.OnNoteClickListener() {
             @Override
             public void onNoteClick(int position) {
                 Intent intent = new Intent(getApplicationContext(), DetailNotesActivity.class);
@@ -124,8 +109,6 @@ public class ToDoNotesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
-
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onLongClick(int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ToDoNotesActivity.this);
@@ -142,7 +125,6 @@ public class ToDoNotesActivity extends AppCompatActivity {
             }
         });
         spinnerSortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -178,7 +160,6 @@ public class ToDoNotesActivity extends AppCompatActivity {
         } else sortBy = null;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void remote (int position) {
         int id = toDoNotes.get(position).getId();
         new WorkingInDB().remoteFromToDoNotes(this, id);

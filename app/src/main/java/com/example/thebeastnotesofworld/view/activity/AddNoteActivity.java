@@ -2,7 +2,6 @@ package com.example.thebeastnotesofworld.view.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,12 +11,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.core.WorkingInDB;
+import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,7 +56,6 @@ public class AddNoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +70,6 @@ public class AddNoteActivity extends AppCompatActivity {
         listeners();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setTextField(ToDoNote toDoNote) {
         editTextTitleNote.setText(toDoNote.getTitle());
         editTextNote.setText(toDoNote.getText());
