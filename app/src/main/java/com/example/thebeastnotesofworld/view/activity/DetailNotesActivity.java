@@ -79,6 +79,7 @@ public class DetailNotesActivity extends AppCompatActivity {
         textViewDetailDeadline.setText(String.valueOf(toDoNote.getDayToDeadLine()));
     }
 
+    //Слушатели
     private void listeners() {
         buttonDetailToBack.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), ToDoNotesActivity.class);
@@ -96,6 +97,7 @@ public class DetailNotesActivity extends AppCompatActivity {
         });
     }
 
+    //Инициализация всех переменных
     private void init() {
         textViewDetailTitle = findViewById(R.id.textViewDetailTitle);
         textViewDetailNote = findViewById(R.id.textViewDetailNote);

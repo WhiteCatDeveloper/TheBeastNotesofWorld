@@ -26,11 +26,12 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private EditText editTextTitleNote;
     private EditText editTextNote;
-    private Spinner spinnerImportance;
     private EditText editTextDeadline;
+    private Spinner spinnerImportance;
     private Button buttonSave;
     private Button buttonToBack;
     private Button buttonGoToAddSimple;
+
     private boolean editNote = false;
     private int idNote;
 
@@ -82,7 +83,8 @@ public class AddNoteActivity extends AppCompatActivity {
             String text = editTextNote.getText().toString();
             int importance = spinnerImportance.getSelectedItemPosition();
             int dayToDeadline = Integer.parseInt(editTextDeadline.getText().toString());
-            String dateOfCreate = getCurrentDate();
+            String dateOfCreate = new SimpleDateFormat
+                    ("dd-MM-yyyy", Locale.getDefault()).format(new Date());
             new WorkingInDB().saveNewToDoNote(this, title, text, importance, dayToDeadline, dateOfCreate);
     }
 
@@ -112,12 +114,6 @@ public class AddNoteActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", (dialogInterface, i) -> {
         });
         builder.show();
-    }
-
-    // Важно!!! Использование паттерна такого формата критически важно для
-    // корректной работы класса MyCalendar
-    private String getCurrentDate() {
-        return new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
     }
 
     private void listeners() {

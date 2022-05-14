@@ -24,9 +24,10 @@
             android:id="@+id/spinnerShowSort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/showSort"
             android:layout_gravity="center"
-            android:background="@color/light_blue"/>
+            android:background="@color/light_blue"
+            android:entries="@array/showSort"
+            tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNotes"

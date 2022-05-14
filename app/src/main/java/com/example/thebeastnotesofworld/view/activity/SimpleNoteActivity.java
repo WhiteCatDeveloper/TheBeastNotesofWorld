@@ -71,12 +71,13 @@ public class SimpleNoteActivity extends AppCompatActivity {
                 (v -> startActivity(new Intent(this, AddSimpleNoteActivity.class)));
     }
 
-
+    //Заполнение списка из БД
     private void getSimpleNote() {
         simpleNoteList.clear();
         simpleNoteList.addAll(new WorkingInDB().getAllSimpleNotes(this));
     }
 
+    //Удаление заметки из БД и отображаемого списка
     private void remoteSimpleNote(int position) {
         int id = simpleNoteList.get(position).getId();
         new WorkingInDB().remoteSimpleNote(this, id);

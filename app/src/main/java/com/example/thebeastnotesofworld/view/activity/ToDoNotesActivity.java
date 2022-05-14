@@ -26,6 +26,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Стартовая активность
+ * Отвечает за отображение списка текущих задач
+ */
+
 
 public class ToDoNotesActivity extends AppCompatActivity {
 
@@ -95,6 +100,7 @@ public class ToDoNotesActivity extends AppCompatActivity {
     }
 
 
+    //Все слушатели
     private void listeners() {
         floatingActionButtonAddNote.setOnClickListener(view -> {
             Intent intent = new Intent(ToDoNotesActivity.this, AddNoteActivity.class);
@@ -160,6 +166,7 @@ public class ToDoNotesActivity extends AppCompatActivity {
         } else sortBy = null;
     }
 
+    //Удаление элемента из БД и отображаемого списка
     private void remote (int position) {
         int id = toDoNotes.get(position).getId();
         new WorkingInDB().remoteFromToDoNotes(this, id);
