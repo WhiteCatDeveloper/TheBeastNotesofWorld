@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.notes.CompletedToDoNote;
-import com.example.thebeastnotesofworld.core.WorkingInDB;
+import com.example.thebeastnotesofworld.db.WorkingInDB;
 import com.example.thebeastnotesofworld.view.adapters.RVAdapterForCompletedNotes;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.thebeastnotesofworld.core;
+package com.example.thebeastnotesofworld.core.notification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.thebeastnotesofworld.R;
+import com.example.thebeastnotesofworld.db.WorkingInDB;
 import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.view.activity.ToDoNotesActivity;
 

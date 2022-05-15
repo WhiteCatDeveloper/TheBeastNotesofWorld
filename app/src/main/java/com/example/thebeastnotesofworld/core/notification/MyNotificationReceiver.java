@@ -1,11 +1,10 @@
-package com.example.thebeastnotesofworld.core;
+package com.example.thebeastnotesofworld.core.notification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
-import androidx.annotation.RequiresApi;
+import com.example.thebeastnotesofworld.core.notification.MyNotification;
 
 public class MyNotificationReceiver extends BroadcastReceiver {
 

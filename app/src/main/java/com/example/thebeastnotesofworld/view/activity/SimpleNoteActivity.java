@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
 import com.example.thebeastnotesofworld.core.notes.SimpleNote;
-import com.example.thebeastnotesofworld.core.WorkingInDB;
+import com.example.thebeastnotesofworld.db.WorkingInDB;
 import com.example.thebeastnotesofworld.view.adapters.RVAdapterForSimpleNotes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

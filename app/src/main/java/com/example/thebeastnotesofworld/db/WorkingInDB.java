@@ -1,4 +1,4 @@
-package com.example.thebeastnotesofworld.core;
+package com.example.thebeastnotesofworld.db;
 
 import android.content.ContentValues;
 import android.content.Context;

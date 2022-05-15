@@ -16,8 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.MyAlarmManager;
-import com.example.thebeastnotesofworld.core.WorkingInDB;
+import com.example.thebeastnotesofworld.core.notification.MyAlarmManager;
+import com.example.thebeastnotesofworld.db.WorkingInDB;
 import com.example.thebeastnotesofworld.core.notes.ToDoNote;
 import com.example.thebeastnotesofworld.db.NotesContract;
 import com.example.thebeastnotesofworld.view.adapters.RVAdapterForToDoNotes;

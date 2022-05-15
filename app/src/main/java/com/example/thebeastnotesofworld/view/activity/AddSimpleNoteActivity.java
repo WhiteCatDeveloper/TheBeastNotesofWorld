@@ -13,7 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.WorkingInDB;
+import com.example.thebeastnotesofworld.db.WorkingInDB;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

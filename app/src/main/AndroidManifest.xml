@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.thebeastnotesofworld">
 
     <application
@@ -10,10 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheBeastNotesOfWorld">
+
+        <receiver android:name=".core.notification.PowerOnReceiver"  android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
         <receiver
-            android:name=".core.MyNotificationReceiver"
+            android:name=".core.notification.MyNotificationReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true">
+        </receiver>
+
         <activity
             android:name=".view.activity.AddSimpleNoteActivity"
             android:exported="false" />
@@ -34,6 +42,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
