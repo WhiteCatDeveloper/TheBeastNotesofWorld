@@ -5,8 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.thebeastnotesofworld.view.activity.SimpleNoteActivity;
-import com.example.thebeastnotesofworld.view.activity.ToDoNotesActivity;
 
 public class PowerOnReceiver extends BroadcastReceiver {
     //Интент мы здесь никак не используем поэтому можно просто игнорировать
@@ -14,8 +12,8 @@ public class PowerOnReceiver extends BroadcastReceiver {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
-        MyAlarmManager alarmManager = new MyAlarmManager();
+        MyAlarmManager alarmManager = new MyAlarmManager(context);
         alarmManager.saveStateAlarm(false);
-        alarmManager.setAlarm(context);
+        alarmManager.setAlarm();
     }
 }

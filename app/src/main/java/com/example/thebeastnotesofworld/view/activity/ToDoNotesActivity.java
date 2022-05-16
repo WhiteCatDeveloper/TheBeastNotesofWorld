@@ -80,7 +80,7 @@ public class ToDoNotesActivity extends AppCompatActivity {
         adapter = new RVAdapterForToDoNotes(this, toDoNotes);
         recyclerViewNotes.setAdapter(adapter);
         listeners();
-        new MyAlarmManager().setAlarm(this);
+        new MyAlarmManager(this).setAlarm();
     }
 
 
