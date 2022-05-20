@@ -71,4 +71,4 @@ public class RVAdapterForSimpleNotes extends RecyclerView.Adapter<RVAdapterForSi
             });
         }
     }
- }
+}

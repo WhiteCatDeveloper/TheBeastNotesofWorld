@@ -95,7 +95,8 @@ public class CompletedNotesActivity extends AppCompatActivity {
     private void remoteOneNote (int position) {
         int id = list.get(position).getId();
         new WorkingInDB().remoteCompletedNote(this, id);
-        list.remove(position);
-        adapter.notifyItemRemoved(position);
+        ArrayList<CompletedToDoNote> newList = new ArrayList<>(list);
+        newList.remove(position);
+        adapter.updateData(newList);
     }
 }

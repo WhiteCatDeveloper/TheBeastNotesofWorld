@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
@@ -27,12 +28,20 @@ public class RVAdapterForCompletedNotes extends
         this.list = list;
     }
 
-    public interface OnCompletedNoteClickListener{
-        void onCompletedNoteClick (int position);
+    public interface OnCompletedNoteClickListener {
+        void onCompletedNoteClick(int position);
     }
 
     public void setOnNoteClickListener(OnCompletedNoteClickListener onCompletedNoteClickListener) {
         this.onCompletedNoteClickListener = onCompletedNoteClickListener;
+    }
+
+    public void updateData(List<CompletedToDoNote> newList) {
+        MyDiffUtil myDiffUtil = new MyDiffUtil(list, newList);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(myDiffUtil);
+        result.dispatchUpdatesTo(this);
+        list.clear();
+        list.addAll(newList);
     }
 
     @NonNull
@@ -43,7 +52,7 @@ public class RVAdapterForCompletedNotes extends
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderCompleted holder, int position){
+    public void onBindViewHolder(@NonNull ViewHolderCompleted holder, int position) {
         CompletedToDoNote note = list.get(position);
         holder.textViewTitle.setText(note.getTitle());
         holder.textViewText.setText(note.getText());
@@ -53,13 +62,17 @@ public class RVAdapterForCompletedNotes extends
         holder.textViewDateOfCompleted.setText(dateOfCompleted);
         int colorId;
         switch (note.getImportance()) {
-            case 1: colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.green);
+            case 1:
+                colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.green);
                 break;
-            case 2: colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.yellow);
+            case 2:
+                colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.yellow);
                 break;
-            case 3: colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.red);
+            case 3:
+                colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.red);
                 break;
-            default: colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.white);
+            default:
+                colorId = ContextCompat.getColor(holder.itemView.getContext(), R.color.white);
         }
         holder.cardViewCompleted.setCardBackgroundColor(colorId);
     }
@@ -75,6 +88,7 @@ public class RVAdapterForCompletedNotes extends
         final TextView textViewDateOfCreate;
         final TextView textViewDateOfCompleted;
         final CardView cardViewCompleted;
+
         public ViewHolderCompleted(View itemView) {
             super(itemView);
             this.textViewTitle = itemView.findViewById(R.id.textViewCompletedTitle);
@@ -88,6 +102,42 @@ public class RVAdapterForCompletedNotes extends
                 }
             });
         }
+    }
+
+    private static class MyDiffUtil extends DiffUtil.Callback {
+        private final List<CompletedToDoNote> oldList;
+        private final List<CompletedToDoNote> newList;
+
+        private MyDiffUtil(List<CompletedToDoNote> oldList, List<CompletedToDoNote> newList) {
+            this.oldList = oldList;
+            this.newList = newList;
+        }
 
 
-    }}
+        @Override
+        public int getOldListSize() {
+            return oldList.size();
+        }
+
+        @Override
+        public int getNewListSize() {
+            return newList.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            CompletedToDoNote oldNote = oldList.get(oldItemPosition);
+            CompletedToDoNote newNote = newList.get(newItemPosition);
+            return oldNote.getId() == newNote.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            CompletedToDoNote oldNote = oldList.get(oldItemPosition);
+            CompletedToDoNote newNote = newList.get(newItemPosition);
+            return oldNote.getTitle().equals(newNote.getTitle()) && oldNote.getText().equals(newNote.getText())
+                    && oldNote.getDateOfCreate().equals(newNote.getDateOfCreate()) &&
+                    oldNote.getDateOfCompleted().equals(newNote.getDateOfCompleted());
+        }
+    }
+}

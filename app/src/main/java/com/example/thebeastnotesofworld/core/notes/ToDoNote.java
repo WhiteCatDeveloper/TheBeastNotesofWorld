@@ -8,34 +8,15 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
-public class ToDoNote {
-    private final int id;
-    private final String title;
-    private final String text;
+public class ToDoNote extends Note{
     private final int importance;
     private final int dayToDeadLine;
-    private final String dateOfCreate;
 
 
     public ToDoNote(int id, String title, String text, int importance, int dayToDeadLine, String dateOfCreate) {
-        this.id = id;
-        this.title = title;
-        this.text = text;
+        super(id, title, text, dateOfCreate);
         this.importance = importance;
         this.dayToDeadLine = dayToDeadLine;
-        this.dateOfCreate = dateOfCreate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getText() {
-        return text;
     }
 
     public int getImportance() {
@@ -44,10 +25,6 @@ public class ToDoNote {
 
     public int getDayToDeadLine() {
         return dayToDeadLine;
-    }
-
-    public String getDateOfCreate() {
-        return dateOfCreate;
     }
 
     // Компаратор для сортировки по текущим оставшимся дням
