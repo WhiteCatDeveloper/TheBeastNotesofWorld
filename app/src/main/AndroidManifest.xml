@@ -9,18 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheBeastNotesOfWorld">
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
 
-        <receiver android:name=".core.notification.PowerOnReceiver"  android:exported="true">
+        <receiver
+            android:name=".core.notification.PowerOnReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".core.notification.MyNotificationReceiver"
             android:enabled="true"
-            android:exported="true">
-        </receiver>
+            android:exported="true"></receiver>
 
         <activity
             android:name=".view.activity.AddSimpleNoteActivity"

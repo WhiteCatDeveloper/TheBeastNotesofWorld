@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teal_200"
+    android:orientation="vertical"
+    tools:context=".view.activity.SettingsActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_time_to_notification"
+        android:textSize="24sp"
+        android:layout_margin="8dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerSetTimeNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:entries="@array/time_notification"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/buttonSaveData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_data" />
+
+    <Button
+        android:id="@+id/buttonLoadData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/load_data" />
+
+    <Button
+        android:id="@+id/buttonSettingsToBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to_back" />
+
+
+</LinearLayout>
