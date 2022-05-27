@@ -30,8 +30,12 @@ public class MyAlarmManager {
             alarmManager.setRepeating(AlarmManager.RTC, getCurrentTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
             saveStateAlarm(true);
         }
+    }
 
-
+    // переустанавливает оповещение
+    public void reinstallAlarm() {
+        saveStateAlarm(false);
+        setAlarm();
     }
 
     private boolean checkIsSetAlarm() {
@@ -41,8 +45,7 @@ public class MyAlarmManager {
         return false;
     }
 
-    //package-private для доступа из PowerOnReceiver
-    void saveStateAlarm(Boolean value) {
+    private void saveStateAlarm(Boolean value) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(KEY_IS_SET_ALARM, value);
         editor.apply();
@@ -50,10 +53,18 @@ public class MyAlarmManager {
 
     private long getCurrentTimeInMillis() {
         Calendar notifyTime = Calendar.getInstance();
-        notifyTime.set(Calendar.HOUR_OF_DAY, 9);
+        notifyTime.set(Calendar.HOUR_OF_DAY, getAlarmTime());
         notifyTime.set(Calendar.MINUTE,0);
         notifyTime.set(Calendar.SECOND,0);
         return notifyTime.getTimeInMillis();
+    }
+
+    private int getAlarmTime() {
+        SharedPreferences getTimeSharedPreferences = context.getSharedPreferences
+                ("TIME_ALARM", Context.MODE_PRIVATE);
+        if (getTimeSharedPreferences.contains("GET_TIME_ALARM")) {
+            return getTimeSharedPreferences.getInt("GET_TIME_ALARM", 9);
+        } else return 9;
     }
 
 }

@@ -38,10 +38,15 @@
         android:text="@string/load_data" />
 
     <Button
+        android:id="@+id/buttonSaveSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_settings" />
+
+    <Button
         android:id="@+id/buttonSettingsToBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/to_back" />
-
 
 </LinearLayout>

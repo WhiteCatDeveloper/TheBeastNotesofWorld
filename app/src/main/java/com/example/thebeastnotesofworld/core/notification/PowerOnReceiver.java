@@ -12,8 +12,6 @@ public class PowerOnReceiver extends BroadcastReceiver {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
-        MyAlarmManager alarmManager = new MyAlarmManager(context);
-        alarmManager.saveStateAlarm(false);
-        alarmManager.setAlarm();
+        new MyAlarmManager(context).reinstallAlarm();
     }
 }

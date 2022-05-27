@@ -28,8 +28,10 @@
     <string name="go_to_create_simple_note">Создать простую заметку</string>
     <string name="to_back_simple_note">Назад (к простым заметкам)</string>
     <string name="edit_time_to_notification">Установить время напоминаний</string>
-    <string name="save_data">Сохранить данные</string>
-    <string name="load_data">Загрузить данные</string>
+    <string name="save_data">Сохранить базу данных</string>
+    <string name="load_data">Загрузить базу данных</string>
+    <string name="save_settings">Сохранить настройки</string>
+    <string name="go_to_settings_menu">Перейти в меню настроек</string>
     <array name="showSort">
         <item>Сначала важные</item>
         <item>Сначала срочные</item>

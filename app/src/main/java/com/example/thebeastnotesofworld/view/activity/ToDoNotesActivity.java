@@ -32,7 +32,7 @@ import java.util.List;
  *
  * Нужно сделать:
  * - Возможность сохранения БД между версиями
- * - Меню настроек
+ * - Меню настроек V
  * - Перейти на чистую архитектуру
  * - Перейти на room DB
  * - Переходить на kotlin (можно начать с notes)
@@ -71,6 +71,8 @@ public class ToDoNotesActivity extends AppCompatActivity {
             startActivity(new Intent(this, ToDoNotesActivity.class));
         }else if (id == R.id.goToCompletedNote) {
             startActivity(new Intent(this, CompletedNotesActivity.class));
+        }else if (id == R.id.goToSettingsMenu) {
+            startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -88,6 +90,7 @@ public class ToDoNotesActivity extends AppCompatActivity {
         adapter = new RVAdapterForToDoNotes(this, toDoNotes);
         recyclerViewNotes.setAdapter(adapter);
         listeners();
+        // для первой установки оповещений
         new MyAlarmManager(this).setAlarm();
     }
 

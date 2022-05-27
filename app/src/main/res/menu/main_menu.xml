@@ -3,5 +3,6 @@
     <item android:title="@string/go_to_simple_note" android:id="@+id/goToSimpleNote"/>
     <item android:title="@string/go_to_to_do_list" android:id="@+id/goToToDoNote"/>
     <item android:title="@string/go_to_completed_to_do" android:id="@+id/goToCompletedNote"/>
+    <item android:title="@string/go_to_settings_menu" android:id="@+id/goToSettingsMenu"/>
 
 </menu>

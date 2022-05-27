@@ -9,9 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheBeastNotesOfWorld">
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
 
         <receiver
             android:name=".core.notification.PowerOnReceiver"
@@ -25,6 +22,9 @@
             android:enabled="true"
             android:exported="true"></receiver>
 
+        <activity
+            android:name=".view.activity.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".view.activity.AddSimpleNoteActivity"
             android:exported="false" />
