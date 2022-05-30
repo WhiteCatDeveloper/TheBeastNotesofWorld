@@ -32,6 +32,7 @@
     <string name="load_data">Загрузить базу данных</string>
     <string name="save_settings">Сохранить настройки</string>
     <string name="go_to_settings_menu">Перейти в меню настроек</string>
+    <string name="what_show_notification">Уведомления о каких заметках показывать:</string>
     <array name="showSort">
         <item>Сначала важные</item>
         <item>Сначала срочные</item>
@@ -55,5 +56,11 @@
         <item>Небольшая</item>
         <item>Средняя </item>
         <item>Высокая</item>
+    </string-array>
+    <string-array name="what_show_notification">
+        <item>Все</item>
+        <item>От небольшой важности и выше</item>
+        <item>От средней и высокой важности</item>
+        <item>Только высокой важности</item>
     </string-array>
 </resources>

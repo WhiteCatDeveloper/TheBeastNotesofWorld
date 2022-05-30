@@ -61,7 +61,7 @@ public class MyAlarmManager {
 
     private int getAlarmTime() {
         SharedPreferences getTimeSharedPreferences = context.getSharedPreferences
-                ("TIME_ALARM", Context.MODE_PRIVATE);
+                ("SETTINGS", Context.MODE_PRIVATE);
         if (getTimeSharedPreferences.contains("GET_TIME_ALARM")) {
             return getTimeSharedPreferences.getInt("GET_TIME_ALARM", 9);
         } else return 9;

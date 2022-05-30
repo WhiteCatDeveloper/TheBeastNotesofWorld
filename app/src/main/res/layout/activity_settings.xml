@@ -25,6 +25,22 @@
         android:entries="@array/time_notification"
         android:minHeight="48dp" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/what_show_notification"
+        android:textSize="18sp"
+        android:layout_margin="8dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerWhatShowNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:entries="@array/what_show_notification"
+        android:minHeight="48dp" />
+
     <Button
         android:id="@+id/buttonSaveData"
         android:layout_width="match_parent"

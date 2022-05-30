@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -88,10 +89,21 @@ public class MyNotification {
 
     // Проходит все текущие задачи в БД и устанавливает значения у переменных dayEnd и deadline
     private void countNeedNotification (Context context) {
+        int whatShow = getWhatShowNotification(context);
         ArrayList<ToDoNote> list = new WorkingInDB().getToDoNotes(context, null);
         for (ToDoNote note : list) {
-            if (note.calculateDayToDeadline() < 1) dayEnd++;
-            else if (note.calculateDayToDeadline() == 1) deadLine++;
+            if (note.getImportance() >= whatShow) {
+                if (note.calculateDayToDeadline() < 1) dayEnd++;
+                else if (note.calculateDayToDeadline() == 1) deadLine++;
+            }
         }
+    }
+
+    private int getWhatShowNotification(Context context) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        if (sharedPreferences.contains("WHAT_SHOW_NOTIFICATION")) {
+            return sharedPreferences.getInt("WHAT_SHOW_NOTIFICATION", 0);
+        } else return 0;
     }
 }
