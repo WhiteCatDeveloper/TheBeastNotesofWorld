@@ -16,10 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeastnotesofworld.R;
-import com.example.thebeastnotesofworld.core.notification.MyAlarmManager;
-import com.example.thebeastnotesofworld.db.WorkingInDB;
 import com.example.thebeastnotesofworld.core.notes.ToDoNote;
+import com.example.thebeastnotesofworld.core.notification.MyAlarmManager;
 import com.example.thebeastnotesofworld.db.NotesContract;
+import com.example.thebeastnotesofworld.db.WorkingInDB;
 import com.example.thebeastnotesofworld.view.adapters.RVAdapterForToDoNotes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -40,7 +40,7 @@ import java.util.List;
  * - Сокращать количество Activity, переходить на фрагменты(например при добавлении заметок)
  *
  *
- * !! поломалось сохраниние состояния сортировки в этой активити!!
+ * !! поломалось сохраниние состояния сортировки в этой активити!! (Исправлено)
  */
 
 
@@ -96,6 +96,7 @@ public class ToDoNotesActivity extends AppCompatActivity {
         listeners();
         // для первой установки оповещений
         new MyAlarmManager(this).setAlarm();
+
     }
 
 
@@ -145,6 +146,9 @@ public class ToDoNotesActivity extends AppCompatActivity {
                         .show();
             }
         });
+        // сначала нужно поставить Spinner в правильное положение
+        setupSpinnerPosition();
+        // Определяет изменение спиннера
         spinnerSortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -163,8 +167,14 @@ public class ToDoNotesActivity extends AppCompatActivity {
                 sortBy = null;
             }
         });
+    }
 
-
+    private void setupSpinnerPosition() {
+        switch (sortBy) {
+            case NotesContract.ToDoNotesEntry.COLUMN_IMPORTANCE + " DESC": spinnerSortBy.setSelection(0);
+                break;
+            case NotesContract.ToDoNotesEntry.COLUMN_DEADLINE + " DESC": spinnerSortBy.setSelection(1);
+        }
     }
 
     // Сохраняет состояние сортировки списка

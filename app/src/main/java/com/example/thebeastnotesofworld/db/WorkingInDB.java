@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.thebeastnotesofworld.core.notes.CompletedToDoNote;
 import com.example.thebeastnotesofworld.core.notes.SimpleNote;
